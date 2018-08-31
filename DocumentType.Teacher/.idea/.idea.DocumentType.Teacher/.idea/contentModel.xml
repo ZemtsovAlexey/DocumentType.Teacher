@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="\app" t="IncludeRecursive" />
+    <e p="\d22df3fe" t="IncludeRecursive" />
+    <e p="C:\git_my\DocumentType.Teacher\DocumentType.Teacher" t="IncludeFlat">
+      <e p="DocumentType.Teacher" t="IncludeRecursive">
+        <e p=".gitignore" t="Include" />
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="Bin" t="ExcludeRecursive" />
+        <e p="ClientApp" t="Include">
+          <e p=".gitignore" t="Include" />
+          <e p="node_modules\bootstrap" t="IncludeRecursive" />
+          <e p="node_modules\react" t="IncludeRecursive" />
+          <e p="node_modules\react-bootstrap" t="IncludeRecursive" />
+          <e p="node_modules\react-dom" t="IncludeRecursive" />
+          <e p="node_modules\react-router-bootstrap" t="IncludeRecursive" />
+          <e p="node_modules\react-router-dom" t="IncludeRecursive" />
+          <e p="node_modules\react-scripts" t="IncludeRecursive" />
+          <e p="node_modules\rimraf" t="IncludeRecursive" />
+          <e p="package-lock.json" t="Include" />
+          <e p="package.json" t="Include" />
+          <e p="public" t="Include">
+            <e p="favicon.ico" t="Include" />
+            <e p="index.html" t="Include" />
+            <e p="manifest.json" t="Include" />
+          </e>
+          <e p="README.md" t="Include" />
+          <e p="src" t="Include">
+            <e p="App.js" t="Include" />
+            <e p="App.test.js" t="Include" />
+            <e p="components" t="Include">
+              <e p="Counter.js" t="Include" />
+              <e p="DocumentTypeTeacher.js" t="Include" />
+              <e p="FetchData.js" t="Include" />
+              <e p="Home.js" t="Include" />
+              <e p="Layout.js" t="Include" />
+              <e p="NavMenu.css" t="Include" />
+              <e p="NavMenu.js" t="Include" />
+            </e>
+            <e p="index.css" t="Include" />
+            <e p="index.js" t="Include" />
+            <e p="registerServiceWorker.js" t="Include" />
+          </e>
+        </e>
+        <e p="Controllers" t="Include">
+          <e p="SampleDataController.cs" t="Include" />
+        </e>
+        <e p="DocumentType.Teacher.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="DocumentType.Teacher.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Pages" t="Include">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="Error.cshtml" t="Include" />
+          <e p="Error.cshtml.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="TeacherHub.cs" t="Include" />
+      </e>
+      <e p="DocumentType.Teacher.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\git_my\DocumentType.Teacher\Neural.Net.CPU\src\Neural.Net.CPU" t="IncludeRecursive">
+      <e p="ActivationFunctions" t="Include">
+        <e p="AbsoluteReLU.cs" t="Include" />
+        <e p="ActivationFunctionProvider.cs" t="Include" />
+        <e p="BipolarSigmoid.cs" t="Include" />
+        <e p="ELU.cs" t="Include" />
+        <e p="IActivationFunction.cs" t="Include" />
+        <e p="LeakyReLU.cs" t="Include" />
+        <e p="LeCunTanh.cs" t="Include" />
+        <e p="None.cs" t="Include" />
+        <e p="ReLU.cs" t="Include" />
+        <e p="Sigmoid.cs" t="Include" />
+        <e p="Tanh.cs" t="Include" />
+      </e>
+      <e p="Bin" t="ExcludeRecursive" />
+      <e p="Domain" t="Include">
+        <e p="Layers" t="Include">
+          <e p="IConvolutionLayer.cs" t="Include" />
+          <e p="IFullyConnectedLayer.cs" t="Include" />
+          <e p="ILayer.cs" t="Include" />
+          <e p="ILinearCompute.cs" t="Include" />
+          <e p="IMatrixLayer.cs" t="Include" />
+          <e p="IMaxPoolingLayer.cs" t="Include" />
+          <e p="IWithWeightsLayer.cs" t="Include" />
+        </e>
+        <e p="Save" t="Include">
+          <e p="ActivationType.cs" t="Include" />
+          <e p="SaveNetworkModel.cs" t="Include" />
+        </e>
+      </e>
+      <e p="extensions" t="Include">
+        <e p="DoubleExtension.cs" t="Include" />
+        <e p="FloatExtensions.cs" t="Include" />
+      </e>
+      <e p="Layers" t="Include">
+        <e p="ConvolutionLayer.cs" t="Include" />
+        <e p="FullyConnectedLayer.cs" t="Include" />
+        <e p="MaxPoolingLayer.cs" t="Include" />
+      </e>
+      <e p="Learning" t="Include">
+        <e p="BackPropagationLearning.cs" t="Include" />
+        <e p="ILearning.cs" t="Include" />
+      </e>
+      <e p="Models" t="Include">
+        <e p="LayerType.cs" t="Include" />
+        <e p="Matrix.cs" t="Include" />
+        <e p="Сoordinate.cs" t="Include" />
+      </e>
+      <e p="Networks" t="Include">
+        <e p="Network.cs" t="Include" />
+      </e>
+      <e p="Neural.Net.CPU.csproj" t="IncludeRecursive" />
+      <e p="Neurons" t="Include">
+        <e p="ConvolutionNeuron.cs" t="Include" />
+        <e p="FullyConnectedNeuron.cs" t="Include" />
+        <e p="MaxPoolingNeuron.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.1" t="Include">
+            <e p="Neural.Net.CPU.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="C:\Users\zemtsov\.Rider2018.2\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\zemtsov\.Rider2018.2\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\zemtsov\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\zemtsov\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_DocumentType.Teacher.-513302239.00" t="ExcludeRecursive" />
+  </component>
+</project>

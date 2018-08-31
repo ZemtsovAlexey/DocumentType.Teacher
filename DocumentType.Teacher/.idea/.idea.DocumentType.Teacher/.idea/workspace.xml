@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="829a3357-88a8-4d26-8aea-65a546b42e28" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../.gitmodules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/.idea/contentModel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DocumentType.Teacher/riderModule.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/DocumentTypeTeacher.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DocumentType.Teacher/TeacherHub.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Neural.Net.CPU" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1572541393">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="8" />
+          <entry key="cshtml" value="2" />
+          <entry key="js" value="12" />
+          <entry key="json" value="3" />
+          <entry key="targets" value="1" />
+          <entry key="ts" value="9" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="8" />
+          <entry key="JSON" value="3" />
+          <entry key="JavaScript" value="12" />
+          <entry key="MsBuild targets file" value="1" />
+          <entry key="Razor" value="2" />
+          <entry key="TypeScript" value="9" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="61" />
+          <entry key="js" value="431" />
+          <entry key="json" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="61" />
+          <entry key="JSON" value="6" />
+          <entry key="JavaScript" value="431" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="TypeScriptServerServiceImpl" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/Counter.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/Layout.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/NavMenu.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="560">
+              <caret line="35" column="56" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/DocumentTypeTeacher.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#412#1777#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Startup.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="87">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <marker date="1535721087203" expanded="false" signature="6:296" ph="..." />
+                <marker date="1535721087203" expanded="true" signature="328:2219" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="355:2217" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="414:477" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="700:1034" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1222:2211" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1269:1346" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1363:1473" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1622:1708" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1756:1922" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="1955:2186" ph="{...}" />
+                <marker date="1535721087203" expanded="true" signature="2065:2172" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/TeacherHub.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+              <folding>
+                <marker date="1535721135664" expanded="true" signature="6:65" ph="..." />
+                <marker date="1535721135664" expanded="true" signature="97:296" ph="{...}" />
+                <marker date="1535721135664" expanded="true" signature="133:294" ph="{...}" />
+                <marker date="1535721135664" expanded="true" signature="198:288" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+              <folding>
+                <marker date="1535727342317" expanded="false" signature="6:206" ph="..." />
+                <marker date="1535727342317" expanded="true" signature="250:1784" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="335:1782" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="400:522" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="617:970" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="754:958" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="1073:1426" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="1210:1414" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="1472:1776" ph="{...}" />
+                <marker date="1535727342317" expanded="true" signature="1671:1766" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9E583682-5CC6-412D-8360-C4C6ADFE4941/65/cd8b5157/IFormFile.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="359">
+              <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+              <folding>
+                <marker date="1535726913511" expanded="true" signature="0:414" ph="/* Decompiled with JetBrains decompiler ... */" />
+                <marker date="1535726913511" expanded="false" signature="422:486" ph="..." />
+                <marker date="1535726913511" expanded="true" signature="523:2122" ph="{...}" />
+                <marker date="1535726913511" expanded="true" signature="624:2120" ph="{...}" />
+                <marker date="1535726913511" expanded="true" signature="633:728" ph="/// Gets the raw Content-Type header of the uploaded file. ... " />
+                <marker date="1535726913511" expanded="true" signature="766:868" ph="/// Gets the raw Content-Disposition header of the uploaded file. ... " />
+                <marker date="1535726913511" expanded="true" signature="1113:1215" ph="/// Gets the form field name from the Content-Disposition header. ... " />
+                <marker date="1535726913511" expanded="true" signature="1246:1342" ph="/// Gets the file name from the Content-Disposition header. ... " />
+                <marker date="1535726913511" expanded="true" signature="1377:1473" ph="/// Opens the request stream for reading the uploaded file. ... " />
+                <marker date="1535726913511" expanded="true" signature="1508:1709" ph="/// Copies the contents of the uploaded file to the &lt;paramref name=&quot;target&quot; /&gt; stream. ... " />
+                <marker date="1535726913511" expanded="true" signature="1747:2012" ph="/// Asynchronously copies the contents of the uploaded file to the &lt;paramref name=&quot;target&quot; /&gt; stream. ... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>importHelpers</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../Neural.Net.CPU/src/Neural.Net.CPU/ActivationFunctions/LeakyReLU.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DocumentType.Teacher/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9E583682-5CC6-412D-8360-C4C6ADFE4941/65/cd8b5157/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DocumentType.Teacher/Pages/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DocumentType.Teacher/TeacherHub.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DocumentType.Teacher/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/53F05B57-A720-47CA-B613-DF4A55F3BB54/71/707a1e06/Hub.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/NavMenu.js" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/App.js" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/package.json" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/Startup.cs" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/TeacherHub.cs" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs" />
+        <option value="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/DocumentTypeTeacher.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/DocumentType.Teacher/ClientApp/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="3866" />
+    <option name="height" value="2186" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DocumentType.Teacher" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DocumentType.Teacher" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DocumentType.Teacher" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DocumentType.Teacher" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DocumentType.Teacher" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Controllers" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Neural.Net.CPU/src/Neural.Net.CPU/Neural.Net.CPU.csproj" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\JetBrains Rider 2018.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/DocumentType.Teacher/bin/Debug/netcoreapp2.1/DocumentType.Teacher.dll" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DocumentType.Teacher" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <envs>
+        <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
+        <env name="ASPNETCORE_URLS" value="https://localhost:5001;http://localhost:5000" />
+      </envs>
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/DocumentType.Teacher/DocumentType.Teacher.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.1" />
+      <browser start="true" url="https://localhost:5001" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="829a3357-88a8-4d26-8aea-65a546b42e28" name="Default Changelist" comment="" />
+      <created>1535715246088</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1535715246088</updated>
+      <workItem from="1535715247502" duration="10887000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="10887000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-6" y="-6" width="1933" height="1063" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18613334" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="NuGet" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" weight="0.32939914" />
+      <window_info anchor="bottom" id="REST Client" />
+      <window_info anchor="bottom" id="Terminal" weight="0.32939914" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" weight="0.32939914" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32939914" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39914164" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Errors In Solution" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Unit Tests Coverage" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="includedJSSourcePackages">
+      <set>
+        <option value="@aspnet/signalr" />
+      </set>
+    </option>
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs</url>
+          <line>33</line>
+          <properties documentPath="$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs" initialLine="33">
+            <startOffsets>
+              <option value="1096" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1119" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/Home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/node_modules/react-router/es/Route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/node_modules/react-router-dom/es/BrowserRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/Counter.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Pages/_ViewImports.cshtml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/Layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/NavMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="35" column="56" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/appsettings.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://C:/Program Files/dotnet/sdk/2.1.400/Microsoft.Common.CurrentVersion.targets">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="4182" column="90" lean-forward="true" selection-start-line="4182" selection-start-column="90" selection-end-line="4182" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@aspnet/signalr/dist/esm/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-816" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/registerServiceWorker.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@aspnet/signalr/dist/esm/ILogger.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@aspnet/signalr/dist/esm/HubConnection.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding>
+            <marker date="1535715254119" expanded="false" signature="6:255" ph="..." />
+            <marker date="1535715254119" expanded="true" signature="287:614" ph="{...}" />
+            <marker date="1535715254119" expanded="true" signature="314:612" ph="{...}" />
+            <marker date="1535715254119" expanded="true" signature="367:441" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/53F05B57-A720-47CA-B613-DF4A55F3BB54/71/707a1e06/Hub.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Startup.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <marker date="1535721087203" expanded="false" signature="6:296" ph="..." />
+            <marker date="1535721087203" expanded="true" signature="328:2219" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="355:2217" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="414:477" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="700:1034" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1222:2211" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1269:1346" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1363:1473" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1622:1708" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1756:1922" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="1955:2186" ph="{...}" />
+            <marker date="1535721087203" expanded="true" signature="2065:2172" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/TeacherHub.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding>
+            <marker date="1535721135664" expanded="true" signature="6:65" ph="..." />
+            <marker date="1535721135664" expanded="true" signature="97:296" ph="{...}" />
+            <marker date="1535721135664" expanded="true" signature="133:294" ph="{...}" />
+            <marker date="1535721135664" expanded="true" signature="198:288" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9E583682-5CC6-412D-8360-C4C6ADFE4941/65/cd8b5157/IFormFile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+          <folding>
+            <marker date="1535726913511" expanded="true" signature="0:414" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1535726913511" expanded="false" signature="422:486" ph="..." />
+            <marker date="1535726913511" expanded="true" signature="523:2122" ph="{...}" />
+            <marker date="1535726913511" expanded="true" signature="624:2120" ph="{...}" />
+            <marker date="1535726913511" expanded="true" signature="633:728" ph="/// Gets the raw Content-Type header of the uploaded file. ... " />
+            <marker date="1535726913511" expanded="true" signature="766:868" ph="/// Gets the raw Content-Disposition header of the uploaded file. ... " />
+            <marker date="1535726913511" expanded="true" signature="1113:1215" ph="/// Gets the form field name from the Content-Disposition header. ... " />
+            <marker date="1535726913511" expanded="true" signature="1246:1342" ph="/// Gets the file name from the Content-Disposition header. ... " />
+            <marker date="1535726913511" expanded="true" signature="1377:1473" ph="/// Opens the request stream for reading the uploaded file. ... " />
+            <marker date="1535726913511" expanded="true" signature="1508:1709" ph="/// Copies the contents of the uploaded file to the &lt;paramref name=&quot;target&quot; /&gt; stream. ... " />
+            <marker date="1535726913511" expanded="true" signature="1747:2012" ph="/// Asynchronously copies the contents of the uploaded file to the &lt;paramref name=&quot;target&quot; /&gt; stream. ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/Controllers/SampleDataController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+          <folding>
+            <marker date="1535727342317" expanded="false" signature="6:206" ph="..." />
+            <marker date="1535727342317" expanded="true" signature="250:1784" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="335:1782" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="400:522" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="617:970" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="754:958" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="1073:1426" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="1210:1414" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="1472:1776" ph="{...}" />
+            <marker date="1535727342317" expanded="true" signature="1671:1766" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentType.Teacher/ClientApp/src/components/DocumentTypeTeacher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#412#1777#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

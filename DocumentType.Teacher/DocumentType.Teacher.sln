@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentType.Teacher", "DocumentType.Teacher\DocumentType.Teacher.csproj", "{BF343770-1784-4942-AFDE-39665ACBE4F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neural.Net.CPU", "..\Neural.Net.CPU\src\Neural.Net.CPU\Neural.Net.CPU.csproj", "{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF343770-1784-4942-AFDE-39665ACBE4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF343770-1784-4942-AFDE-39665ACBE4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF343770-1784-4942-AFDE-39665ACBE4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF343770-1784-4942-AFDE-39665ACBE4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

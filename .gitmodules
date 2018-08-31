@@ -1,0 +1,3 @@
+[submodule "Neural.Net.CPU"]
+	path = Neural.Net.CPU
+	url = https://github.com/ZemtsovAlexey/Neural.Net.CPU
