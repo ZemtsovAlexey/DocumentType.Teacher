@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { Col, Grid, Row, Thumbnail, Table } from 'react-bootstrap';
+import { NetSettings } from './NetSettings';
 
 export class DocumentTypeTeacher extends Component {
     displayName = DocumentTypeTeacher.name;
@@ -21,11 +23,11 @@ export class DocumentTypeTeacher extends Component {
 
     componentDidMount = () => {
         const hubConnection = new HubConnectionBuilder()
-            .withUrl(`https://${document.location.host}/teacherHub`)
+            .withUrl(`${document.location.protocol}//${document.location.host}/teacherHub`)
             .configureLogging(LogLevel.Information)
             .build();
 
-        const nick = window.prompt('Your name:', 'John');
+        const nick = 'John';//window.prompt('Your name:', 'John');
 
         this.setState({hubConnection, nick}, () => {
             this.state.hubConnection
@@ -52,9 +54,7 @@ export class DocumentTypeTeacher extends Component {
     onFormSubmit(e){
         e.preventDefault();
 
-        const data = new FormData(e.target);
-        
-        this.fileUpload(data).then((response)=>{
+        this.fileUpload(this.state.file).then((response)=>{
             console.log(response.data);
         })
     }
@@ -64,26 +64,10 @@ export class DocumentTypeTeacher extends Component {
     }
 
     async fileUpload(file){
-        const data = new FormData();
-        data.append('file',file);
-
-        const formData = {};
-        for (const field in this.refs) {
-            formData[field] = this.refs[field].value;
-        }
-        
-        const request = 
-        {
+        return await fetch('api/SampleData/UploadFile', {
             method: 'POST',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            body: file
-        };
-
-        return await fetch('api/SampleData/UploadFile', request);
-        
-        // return post(url, formData,config)
+            body: new FormData().append('file', file)
+        });
     }
 
 
@@ -92,29 +76,40 @@ export class DocumentTypeTeacher extends Component {
             <div>
                 <h1>Teacher</h1>
 
-                <img width={200} height={200} style={{background: "silver", border: "1px solid black"}}/>
-                <button onClick={this.incrementCounter}>Increment</button>
-                <div>
-                    <br />
-                    <input
-                        type="text"
-                        value={this.state.message}
-                        onChange={e => this.setState({ message: e.target.value })}
-                    />
+                <Row>
+                    <Col sm={3}>
+                        <Thumbnail href="#" alt="171x180" src="/thumbnail.png" />
+                    </Col>
+                    <Col sm={9}>
+                        <NetSettings />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={3}>
+                        <div>
+                            <br />
+                            <input
+                                type="text"
+                                value={this.state.message}
+                                onChange={e => this.setState({ message: e.target.value })}
+                            />
 
-                    <button onClick={this.sendMessage}>Send</button>
+                            <button onClick={this.sendMessage}>Send</button>
 
-                    <div>
-                        {this.state.messages.map((message, index) => (
-                            <span style={{display: 'block'}} key={index}> {message} </span>
-                        ))}
-                    </div>
-                </div>
-                <form onSubmit={this.onFormSubmit}>
-                    <h1>File Upload</h1>
-                    <input type="file" onChange={this.onChange} />
-                    <button type="submit">Upload</button>
-                </form>
+                            <div>
+                                {this.state.messages.map((message, index) => (
+                                    <span style={{ display: 'block' }} key={index}> {message} </span>
+                                ))}
+                            </div>
+                        </div>
+                        <form onSubmit={this.onFormSubmit}>
+                            <h1>File Upload</h1>
+                            <input type="file" onChange={this.onChange} />
+                            <button type="submit">Upload</button>
+                        </form>
+                    </Col>
+                    <Col sm={9}></Col>
+                </Row>
             </div>
         );
     }

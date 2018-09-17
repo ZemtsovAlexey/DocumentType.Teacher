@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentType.Teacher", "DocumentType.Teacher\DocumentType.Teacher.csproj", "{BF343770-1784-4942-AFDE-39665ACBE4F9}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentType.Teacher", "DocumentType.Teacher\DocumentType.Teacher.csproj", "{BF343770-1784-4942-AFDE-39665ACBE4F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neural.Net.CPU", "..\Neural.Net.CPU\src\Neural.Net.CPU\Neural.Net.CPU.csproj", "{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neural.Net.CPU", "..\Neural.Net.CPU\src\Neural.Net.CPU\Neural.Net.CPU.csproj", "{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "..\ImageProcessing\ImageProcessing.csproj", "{A0249150-356A-4160-826D-A2D8971712C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,15 @@ Global
 		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE5D0DD1-F98B-4912-ADC7-BA72D4F2C7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0249150-356A-4160-826D-A2D8971712C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0249150-356A-4160-826D-A2D8971712C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0249150-356A-4160-826D-A2D8971712C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0249150-356A-4160-826D-A2D8971712C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8CA307B-8311-4165-A24C-D91032B71A0C}
 	EndGlobalSection
 EndGlobal
