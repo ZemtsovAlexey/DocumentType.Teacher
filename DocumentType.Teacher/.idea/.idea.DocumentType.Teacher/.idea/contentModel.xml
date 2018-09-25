@@ -25,6 +25,7 @@
             <e p="favicon.ico" t="Include" />
             <e p="index.html" t="Include" />
             <e p="manifest.json" t="Include" />
+            <e p="thumbnail.png" t="Include" />
           </e>
           <e p="README.md" t="Include" />
           <e p="src" t="Include">
@@ -32,12 +33,15 @@
             <e p="App.test.js" t="Include" />
             <e p="components" t="Include">
               <e p="Counter.js" t="Include" />
-              <e p="DocumentTypeTeacher.js" t="Include" />
               <e p="FetchData.js" t="Include" />
               <e p="Home.js" t="Include" />
               <e p="Layout.js" t="Include" />
               <e p="NavMenu.css" t="Include" />
               <e p="NavMenu.js" t="Include" />
+              <e p="teacher" t="Include">
+                <e p="DocumentTypeTeacher.js" t="Include" />
+                <e p="NetSettings.js" t="Include" />
+              </e>
             </e>
             <e p="index.css" t="Include" />
             <e p="index.js" t="Include" />
@@ -45,9 +49,19 @@
           </e>
         </e>
         <e p="Controllers" t="Include">
+          <e p="NeuralNetworkController.cs" t="Include" />
           <e p="SampleDataController.cs" t="Include" />
         </e>
         <e p="DocumentType.Teacher.csproj" t="IncludeRecursive" />
+        <e p="Hubs" t="Include">
+          <e p="TeacherHub.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="NetSettings.cs" t="Include" />
+        </e>
+        <e p="Nets" t="Include">
+          <e p="NeuralNetwork.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
@@ -65,10 +79,21 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
-        <e p="TeacherHub.cs" t="Include" />
       </e>
       <e p="DocumentType.Teacher.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\git_my\DocumentType.Teacher\ImageProcessing" t="IncludeRecursive">
+      <e p="Bin" t="ExcludeRecursive" />
+      <e p="BitmapExt.cs" t="Include" />
+      <e p="ImageProcessing.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.1" t="Include">
+            <e p="ImageProcessing.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
     </e>
     <e p="C:\git_my\DocumentType.Teacher\Neural.Net.CPU\src\Neural.Net.CPU" t="IncludeRecursive">
       <e p="ActivationFunctions" t="Include">

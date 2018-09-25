@@ -774,23 +774,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zemet\\.nuget\\packages\\": {},
+    "C:\\Users\\zemtsov\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\work\\DocumentType.Teacher\\ImageProcessing\\ImageProcessing.csproj",
+      "projectUniqueName": "C:\\git_my\\DocumentType.Teacher\\ImageProcessing\\ImageProcessing.csproj",
       "projectName": "ImageProcessing",
-      "projectPath": "C:\\work\\DocumentType.Teacher\\ImageProcessing\\ImageProcessing.csproj",
-      "packagesPath": "C:\\Users\\zemet\\.nuget\\packages\\",
-      "outputPath": "C:\\work\\DocumentType.Teacher\\ImageProcessing\\obj\\",
+      "projectPath": "C:\\git_my\\DocumentType.Teacher\\ImageProcessing\\ImageProcessing.csproj",
+      "packagesPath": "C:\\Users\\zemtsov\\.nuget\\packages\\",
+      "outputPath": "C:\\git_my\\DocumentType.Teacher\\ImageProcessing\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\zemet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\zemtsov\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -798,6 +798,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://ci.moedelo.org/guestAuth/app/nuget/v1/FeedService.svc/": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

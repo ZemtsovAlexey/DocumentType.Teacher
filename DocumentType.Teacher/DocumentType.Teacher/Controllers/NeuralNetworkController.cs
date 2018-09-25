@@ -5,7 +5,10 @@ using Neural.Net.CPU.Domain.Layers;
 using Neural.Net.CPU.Domain.Save;
 using Neural.Net.CPU.Models;
 using System;
-using System.Collections.Generic;
+using System.Drawing;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace DocumentType.Teacher.Controllers
 {
@@ -15,7 +18,7 @@ namespace DocumentType.Teacher.Controllers
     {
         public NeuralNetworkController()
         {
-            NeuralNetwork.Create();
+//            NeuralNetwork.Create();
         }
 
         [HttpGet("settings")]
@@ -55,6 +58,41 @@ namespace DocumentType.Teacher.Controllers
             }
 
             return settings;
+        }
+        
+        [HttpPost("[action]")]
+        public double[] Compute(IFormFile file)
+        {
+            var image = Image.FromStream(file.OpenReadStream());
+            var result = NeuralNetwork.Compute(image);
+
+            return new[] { 0d };
+        }
+
+        [HttpPost("compute/image")]
+        public IActionResult ComputeImage(IFormFile file)
+        {
+            var image = Image.FromStream(file.OpenReadStream());
+            var result = NeuralNetwork.Compute(image);
+            var memory = new MemoryStream();
+
+            result.Save(memory, ImageFormat.Jpeg);
+
+            memory.Position = 0;
+
+            return File(memory, "image/jpeg", "test");
+        }
+
+        [HttpPost("teach/run")]
+        public void TeachRun()
+        {
+            NeuralNetwork.TeachRun();
+        }
+        
+        [HttpPost("teach/stop")]
+        public void TeachStop()
+        {
+            NeuralNetwork.TeachStop();
         }
     }
 }

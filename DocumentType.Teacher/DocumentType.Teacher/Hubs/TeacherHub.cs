@@ -1,3 +1,4 @@
+using DocumentType.Teacher.Nets;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
@@ -5,9 +6,20 @@ namespace DocumentType.Teacher
 {
     public class TeacherHub : Hub
     {
-        public Task SendToAll(string user, string message)
+        public TeacherHub()
         {
-            return Clients.All.SendAsync("sendToAll", user, message);
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            var clients = Clients;
+
+            NeuralNetwork.IterationChange += (s, r) =>
+            {
+                clients.All.SendAsync("IterationChange", r);
+            };
+
+            return base.OnConnectedAsync();
         }
     }
 }

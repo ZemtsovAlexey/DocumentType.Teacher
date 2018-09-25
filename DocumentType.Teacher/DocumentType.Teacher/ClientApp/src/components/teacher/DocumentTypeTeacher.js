@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { Col, Grid, Row, Thumbnail, Table } from 'react-bootstrap';
+import { Col, Grid, Row, Thumbnail, ButtonGroup, Button } from 'react-bootstrap';
 import { NetSettings } from './NetSettings';
 
 export class DocumentTypeTeacher extends Component {
@@ -9,11 +9,13 @@ export class DocumentTypeTeacher extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nick: '',
-            message: '',
-            messages: [],
             hubConnection: null,
-            file: null
+            file: null,
+            iteration: 0,
+            error: 0,
+            successes: 0,
+            computeResult: 0,
+            imageSrc: '/thumbnail.png'
         };
 
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -27,49 +29,55 @@ export class DocumentTypeTeacher extends Component {
             .configureLogging(LogLevel.Information)
             .build();
 
-        const nick = 'John';//window.prompt('Your name:', 'John');
-
-        this.setState({hubConnection, nick}, () => {
+        this.setState({hubConnection}, () => {
             this.state.hubConnection
                 .start()
                 .then(() => console.log('Connection started!'))
                 .catch(err => console.log('Error while establishing connection :('));
 
-            this.state.hubConnection.on('sendToAll', (nick, receivedMessage) => {
-                const text = `${nick}: ${receivedMessage}`;
-                const messages = this.state.messages.concat([text]);
-                this.setState({messages});
+            this.state.hubConnection.on('IterationChange', (result) => {
+                this.setState({ iteration: result.iteration, error: result.error, successes: result.successes });
             });
         });
     };
 
-    sendMessage = () => {
-        this.state.hubConnection
-            .invoke('SendToAll', this.state.nick, this.state.message)
-            .catch(err => console.error(err));
-
-        this.setState({message: ''});
-    };
-
-    onFormSubmit(e){
+    onFormSubmit = async (e) => {
         e.preventDefault();
 
-        this.fileUpload(this.state.file).then((response)=>{
-            console.log(response.data);
-        })
-    }
+        this.fileUpload(this.state.file)
+            .then(response => response.blob())
+            .then(images => {
+                let outside = URL.createObjectURL(images);
+                this.setState({ imageSrc: outside });
+                console.log(outside)
+            });
+    };
     
     onChange(e) {
         this.setState({file:e.target.files[0]})
     }
 
-    async fileUpload(file){
-        return await fetch('api/SampleData/UploadFile', {
+    fileUpload(file){
+        let data = new FormData();
+        data.append('file', file);
+        
+        return fetch('api/net/Compute/image', {
             method: 'POST',
-            body: new FormData().append('file', file)
+            body: data
         });
     }
 
+    async teachRun(){
+        await fetch('api/net/teach/run', {
+            method: 'POST'
+        });
+    }
+
+    async teachStop(){
+        await fetch('api/net/teach/stop', {
+            method: 'POST'
+        });
+    }
 
     render() {
         return (
@@ -77,38 +85,45 @@ export class DocumentTypeTeacher extends Component {
                 <h1>Teacher</h1>
 
                 <Row>
-                    <Col sm={3}>
-                        <Thumbnail href="#" alt="171x180" src="/thumbnail.png" />
+                    <Col sm={7}>
+                        <Thumbnail href="#" alt="171x180" src={this.state.imageSrc} />
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={4}>
                         <NetSettings />
                     </Col>
                 </Row>
                 <Row>
                     <Col sm={3}>
-                        <div>
-                            <br />
-                            <input
-                                type="text"
-                                value={this.state.message}
-                                onChange={e => this.setState({ message: e.target.value })}
-                            />
-
-                            <button onClick={this.sendMessage}>Send</button>
-
-                            <div>
-                                {this.state.messages.map((message, index) => (
-                                    <span style={{ display: 'block' }} key={index}> {message} </span>
-                                ))}
-                            </div>
-                        </div>
-                        <form onSubmit={this.onFormSubmit}>
+                        <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
                             <h1>File Upload</h1>
                             <input type="file" onChange={this.onChange} />
                             <button type="submit">Upload</button>
+                            <label>{this.state.computeResult}</label>
                         </form>
                     </Col>
                     <Col sm={9}></Col>
+                </Row>
+                <Row>
+                    <Col sm={2}>
+                        <ButtonGroup>
+                            <Button onClick={this.teachRun}>teach run</Button>
+                            <Button onClick={this.teachStop}>teach stop</Button>
+                        </ButtonGroup>
+                    </Col>
+                    <Col sm={1}>
+                    </Col>
+                    <Col sm={1}>
+                        <label>Iteration: </label>
+                        <label>{this.state.iteration}</label>
+                    </Col>
+                    <Col sm={2}>
+                        <label>Error: </label>
+                        <label>{this.state.error}</label>
+                    </Col>
+                    <Col sm={2}>
+                        <label>Successes: </label>
+                        <label>{this.state.successes}</label>
+                    </Col>
                 </Row>
             </div>
         );
