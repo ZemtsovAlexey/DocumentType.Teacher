@@ -40,11 +40,14 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //600 - 48
+                new ConvolutionLayer(ActivationType.ReLu, 15, 3), //600 - 48
                 new MaxPoolingLayer(2), // 75 - 11
-                new ConvolutionLayer(ActivationType.ReLu, 16, 3),
+                new ConvolutionLayer(ActivationType.ReLu, 30, 3),
                 new MaxPoolingLayer(2), // 75 - 11
-                new FullyConnectedLayer(150, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -119,7 +122,8 @@ namespace DocumentType.Teacher.Nets
             var iteration = 0;
             var error = 0d;
             var computed = 0d;
-            var succes = 0;
+            var success = 0;
+            var globalSuccess = 0;
             var totalSuccess = 0;
             var trueAnswers = 0;
             var falseAnswers = 0;
@@ -135,6 +139,7 @@ namespace DocumentType.Teacher.Nets
                 {
                     double[,] input;
                     double[] target;
+                    var prevSuccess = success;
 
                     if (falseAnswers < 1)
                     {
@@ -147,7 +152,8 @@ namespace DocumentType.Teacher.Nets
                         computed = Net.Compute(input)[0];
                         target = new[] { -1d };
 
-                        succes = computed <= 0 ? succes + 1 : 0;
+                        success = computed <= 0 ? success + 1 : 0;
+                        globalSuccess = computed <= 0 ? globalSuccess + 1 : globalSuccess;
                     }
                     else
                     {
@@ -160,13 +166,21 @@ namespace DocumentType.Teacher.Nets
                         computed = Net.Compute(input)[0];
                         target = new[] { 1d };
 
-                        succes = computed > 0 ? succes + 1 : 0;
+                        success = computed > 0.5d ? success + 1 : 0;
+                        globalSuccess = computed > 0 ? globalSuccess + 1 : globalSuccess;
                     }
 
-                    totalSuccess = Math.Max(0, succes > totalSuccess ? succes : totalSuccess - 1);
+                    totalSuccess = Math.Max(0, success > totalSuccess ? success : totalSuccess - 1);
+//                    error += prevSuccess > success ? teacher.Run(input, target) : 0;
                     error += teacher.Run(input, target);
                     iteration++;
-                    IterationChange?.Invoke(new object(), new TeachResult { Iteration = iteration, Error = error / (double)iteration, Successes = totalSuccess });
+                    IterationChange?.Invoke(new object(), new TeachResult
+                    {
+                        Iteration = iteration, 
+                        Error = error / (double)iteration, 
+                        Successes = totalSuccess,
+                        SuccessPercent = globalSuccess / (double)iteration
+                    });
                 }
             }).ConfigureAwait(false);
         }

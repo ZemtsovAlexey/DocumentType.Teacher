@@ -15,6 +15,7 @@ export class DocumentTypeTeacher extends Component {
             iteration: 0,
             error: 0,
             successes: 0,
+            successPercent: 0,
             computeResult: 0,
             imageSrc: '/thumbnail.png'
         };
@@ -37,7 +38,7 @@ export class DocumentTypeTeacher extends Component {
                 .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('IterationChange', (result) => {
-                this.setState({ iteration: result.iteration, error: result.error, successes: result.successes });
+                this.setState({ iteration: result.iteration, error: result.error, successes: result.successes, successPercent: result.successPercent });
             });
         });
     };
@@ -132,9 +133,10 @@ export class DocumentTypeTeacher extends Component {
                         <label>Error: </label>
                         <label>{this.state.error}</label>
                     </Col>
-                    <Col sm={2}>
+                    <Col sm={3}>
                         <label>Successes: </label>
                         <label>{this.state.successes}</label>
+                        <label>&nbsp;&nbsp;{this.state.successPercent}%</label>
                     </Col>
                 </Row>
             </div>
