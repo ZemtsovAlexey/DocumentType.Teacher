@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using DocumentType.Teacher.Models;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Neural.Net.CPU.Domain.Layers;
+using Neural.Net.CPU.Models;
 
 namespace DocumentType.Teacher.Nets
 {
@@ -37,14 +39,46 @@ namespace DocumentType.Teacher.Nets
 
             Net = new Network();
 
-            Net.InitLayers(602, 26,
-                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //600 - 24
-                new MaxPoolingLayer(2), //300 - 12 
-                new ConvolutionLayer(ActivationType.ReLu, 16, 3), // 150 - 10
-                new MaxPoolingLayer(2), // 75 - 5
+            Net.InitLayers(width, height,
+                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //600 - 48
+                new MaxPoolingLayer(2), // 75 - 11
+                new ConvolutionLayer(ActivationType.ReLu, 16, 3),
+                new MaxPoolingLayer(2), // 75 - 11
                 new FullyConnectedLayer(150, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
+
+            Net.Randomize();
+
+            teacher = new BackPropagationLearning(Net);
+        }
+        
+        public static void Create(int width, int height, NetSettings[] settings)
+        {
+            imageSize = (width, height);
+
+            Net = new Network();
+
+            var layers = new List<ILayer>();
+
+            foreach (var setting in settings)
+            {
+                switch (setting.Type)
+                {
+                    case LayerType.Convolution:
+                        layers.Add(new ConvolutionLayer(setting.Activation.Value, setting.NeuronsCount.Value, setting.KernelSize.Value));
+                        break;
+                    case LayerType.FullyConnected:
+                        layers.Add(new FullyConnectedLayer(setting.NeuronsCount.Value, setting.Activation.Value));
+                        break;
+                    case LayerType.MaxPoolingLayer:
+                        layers.Add(new MaxPoolingLayer(setting.KernelSize.Value));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            Net.InitLayers(width, height, layers.ToArray());
 
             Net.Randomize();
 
@@ -55,11 +89,11 @@ namespace DocumentType.Teacher.Nets
         {
             var scaledImage = ((Bitmap)image)
                 .ToBlackWite()
-                .ScaleImage(602, 100000);
+                .ScaleImage(imageSize.width, 100000);
             var map = scaledImage.GetDoubleMatrix();
             var width = map.GetLength(1);
             var heigth = map.GetLength(0);
-            var partHeight = 26;
+            var partHeight = imageSize.height;
             var hPosition = 0;
             var step = 3;
 
@@ -102,7 +136,7 @@ namespace DocumentType.Teacher.Nets
                     double[,] input;
                     double[] target;
 
-                    if (falseAnswers < 3)
+                    if (falseAnswers < 1)
                     {
                         falseAnswers++;
                         trueAnswers = 0;
@@ -142,10 +176,10 @@ namespace DocumentType.Teacher.Nets
             Running = false;
         }
 
-        public static void PrepareTeachBatchFile(string imagesPath = @"C:\Users\zemet\OneDrive\Документы\DocumentsTypesTeach")
+        public static void PrepareTeachBatchFile()
         {
             teachBatch = new List<(double[,] map, double target)>();
-            var imagesPaths = Directory.EnumerateFiles(imagesPath, "*.jpg").ToArray();
+            var imagesPaths = Directory.EnumerateFiles(@"TeachData/invoices", "*.jpg").ToArray();
 
             foreach (var path in imagesPaths)
             {

@@ -40,6 +40,12 @@ export class NetSettings extends Component {
         this.setState({ layers: layers });
     };
 
+    prepareTeachBatchFile = async () => {
+        await fetch('api/net/teach/batch', {
+            method: 'POST'
+        });
+    };
+
     render() {
         const layers = this.state.layers;
         let i = -1;
@@ -99,7 +105,7 @@ export class NetSettings extends Component {
                     <Col sm={12}>
                         <ButtonGroup>
                             <Button>Apply</Button>
-                            <Button>Prepare batch</Button>
+                            <Button onClick={this.prepareTeachBatchFile}>Prepare batch</Button>
                         </ButtonGroup>
                     </Col>
                 </Row>

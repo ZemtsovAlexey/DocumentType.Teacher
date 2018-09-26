@@ -94,5 +94,11 @@ namespace DocumentType.Teacher.Controllers
         {
             NeuralNetwork.TeachStop();
         }
+        
+        [HttpPost("teach/batch")]
+        public void PrepareTeachBatchFile()
+        {
+            NeuralNetwork.PrepareTeachBatchFile();
+        }
     }
 }
