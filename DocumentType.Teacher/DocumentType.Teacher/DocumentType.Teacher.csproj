@@ -23,6 +23,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove=".gitignore" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\ImageProcessing\ImageProcessing.csproj" />
       <ProjectReference Include="..\..\Neural.Net.CPU\src\Neural.Net.CPU\Neural.Net.CPU.csproj" />
     </ItemGroup>

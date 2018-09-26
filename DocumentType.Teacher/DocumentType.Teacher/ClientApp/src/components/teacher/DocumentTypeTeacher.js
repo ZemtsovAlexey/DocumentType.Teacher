@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { Col, Grid, Row, Thumbnail, ButtonGroup, Button } from 'react-bootstrap';
+import { Col, Row, Thumbnail, ButtonGroup, Button, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstrap';
 import { NetSettings } from './NetSettings';
 
 export class DocumentTypeTeacher extends Component {
@@ -11,6 +11,7 @@ export class DocumentTypeTeacher extends Component {
         this.state = {
             hubConnection: null,
             file: null,
+            fileUploading: false,
             iteration: 0,
             error: 0,
             successes: 0,
@@ -43,13 +44,13 @@ export class DocumentTypeTeacher extends Component {
 
     onFormSubmit = async (e) => {
         e.preventDefault();
+        this.setState({ fileUploading: true });
 
         this.fileUpload(this.state.file)
             .then(response => response.blob())
             .then(images => {
                 let outside = URL.createObjectURL(images);
-                this.setState({ imageSrc: outside });
-                console.log(outside)
+                this.setState({ imageSrc: outside, fileUploading: false });
             });
     };
     
@@ -81,7 +82,7 @@ export class DocumentTypeTeacher extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ margin: '0 0 25px 0' }}>
                 <h1>Teacher</h1>
 
                 <Row>
@@ -97,12 +98,23 @@ export class DocumentTypeTeacher extends Component {
                         <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
                             <h1>File Upload</h1>
                             <input type="file" onChange={this.onChange} />
-                            <button type="submit">Upload</button>
+                            <Button type="submit" bsStyle="primary" disabled={this.state.fileUploading}>Upload</Button>
                             <label>{this.state.computeResult}</label>
                         </form>
                     </Col>
                     <Col sm={9}></Col>
                 </Row>
+                <FormGroup>
+                    <ControlLabel htmlFor="fileUpload" style={{ cursor: "pointer" }}><h3><Label bsStyle="success">Add file</Label></h3>
+                        <FormControl
+                            id="fileUpload"
+                            type="file"
+                            accept=".jpg"
+                            //onChange={this.addFile}
+                            style={{ display: "none" }}
+                        />
+                    </ControlLabel>
+                </FormGroup>
                 <Row>
                     <Col sm={2}>
                         <ButtonGroup>

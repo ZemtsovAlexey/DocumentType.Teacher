@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Grid, Row, Thumbnail, Table } from 'react-bootstrap';
+import { Col, Grid, Row, Thumbnail, Table, ButtonGroup, Button } from 'react-bootstrap';
 
 export class NetSettings extends Component {
 
@@ -95,6 +95,14 @@ export class NetSettings extends Component {
                         )}
                     </tbody>
                 </Table>
+                <Row>
+                    <Col sm={12}>
+                        <ButtonGroup>
+                            <Button>Apply</Button>
+                            <Button>Prepare batch</Button>
+                        </ButtonGroup>
+                    </Col>
+                </Row>
             </div>
         );
     }

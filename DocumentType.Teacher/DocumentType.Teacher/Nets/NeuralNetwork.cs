@@ -28,7 +28,7 @@ namespace DocumentType.Teacher.Nets
         static NeuralNetwork()
         {
             Create(602, 26);
-            PrepareTeachBatchFile("");
+            PrepareTeachBatchFile();
         }
         
         public static void Create(int width, int height)
@@ -130,7 +130,6 @@ namespace DocumentType.Teacher.Nets
                     }
 
                     totalSuccess = Math.Max(0, succes > totalSuccess ? succes : totalSuccess - 1);
-                    //error += (target[0] < 0 && computed >= 0) || (target[0] > 0 && computed <= 0) ? teacher.Run(input, target) : 0;
                     error += teacher.Run(input, target);
                     iteration++;
                     IterationChange?.Invoke(new object(), new TeachResult { Iteration = iteration, Error = error / (double)iteration, Successes = totalSuccess });
@@ -143,10 +142,10 @@ namespace DocumentType.Teacher.Nets
             Running = false;
         }
 
-        public static void PrepareTeachBatchFile(string imagesPath)
+        public static void PrepareTeachBatchFile(string imagesPath = @"C:\Users\zemet\OneDrive\Документы\DocumentsTypesTeach")
         {
             teachBatch = new List<(double[,] map, double target)>();
-            var imagesPaths = Directory.EnumerateFiles(@"D:\documents types\teach\invoices", "*.jpg").ToArray();
+            var imagesPaths = Directory.EnumerateFiles(imagesPath, "*.jpg").ToArray();
 
             foreach (var path in imagesPaths)
             {
@@ -156,10 +155,10 @@ namespace DocumentType.Teacher.Nets
                     continue;
 
                 var image = (Bitmap)GetImage(path);
-                var ratio = (double)image.Width / image.Width;
+                var ratio = (double)imageSize.width / image.Width;
                 var from = 0d;
                 var to = 0d;
-                var partHeight = 26;
+                var partHeight = imageSize.height;
                 var hPosition = 0;
                 var step = 3;
 
@@ -172,7 +171,7 @@ namespace DocumentType.Teacher.Nets
 
                 var scaledImage = image
                     .ToBlackWite()
-                    .ScaleImage(image.Width, 100000);
+                    .ScaleImage(imageSize.width, 100000);
                 var map = scaledImage.GetDoubleMatrix();
                 var width = map.GetLength(1);
                 var heigth = map.GetLength(0);
