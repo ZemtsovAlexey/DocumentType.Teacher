@@ -24,6 +24,7 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         private static List<(double[,] map, double target)> teachBatch;
         private static (int width, int height) imageSize;
+        private static int scanStep => imageSize.height / 5;
 
         public static event EventHandler<TeachResult> IterationChange;
 
@@ -40,10 +41,10 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 15, 3), //600 - 48
-                new MaxPoolingLayer(2), // 75 - 11
-                new ConvolutionLayer(ActivationType.ReLu, 30, 3),
-                new MaxPoolingLayer(2), // 75 - 11
+                //new ConvolutionLayer(ActivationType.ReLu, 2, 7), //600 - 48
+                //new MaxPoolingLayer(2), // 75 - 11
+                //new ConvolutionLayer(ActivationType.ReLu, 4, 3),
+                //new MaxPoolingLayer(2), // 75 - 11
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
@@ -98,7 +99,7 @@ namespace DocumentType.Teacher.Nets
             var heigth = map.GetLength(0);
             var partHeight = imageSize.height;
             var hPosition = 0;
-            var step = 3;
+            var step = scanStep;
 
             var result = new List<(int position, double value)>();
 
@@ -111,7 +112,7 @@ namespace DocumentType.Teacher.Nets
                 hPosition += step;
             }
 
-            var cords = result.Where(x => x.value > 0).Select(x => new Cords { Top = x.position, Bottom = x.position + 26 }).ToList();
+            var cords = result.Where(x => x.value > 0.3d).Select(x => new Cords { Top = x.position, Bottom = x.position + 26 }).ToList();
 
             return scaledImage.DrawCords(cords);
         }
@@ -166,8 +167,8 @@ namespace DocumentType.Teacher.Nets
                         computed = Net.Compute(input)[0];
                         target = new[] { 1d };
 
-                        success = computed > 0.5d ? success + 1 : 0;
-                        globalSuccess = computed > 0 ? globalSuccess + 1 : globalSuccess;
+                        success = computed > 0.9d ? success + 1 : 0;
+                        globalSuccess = computed > 0.9d ? globalSuccess + 1 : globalSuccess;
                     }
 
                     totalSuccess = Math.Max(0, success > totalSuccess ? success : totalSuccess - 1);
@@ -190,6 +191,13 @@ namespace DocumentType.Teacher.Nets
             Running = false;
         }
 
+        public static List<byte[]> GetLayerViews(int layerIndex)
+        {
+            var layer = (IMatrixLayer)Net.Layers[layerIndex];
+
+            return layer.Outputs.Select(x => x.Value.ToBitmap().ToByteArray()).ToList();
+        }
+
         public static void PrepareTeachBatchFile()
         {
             teachBatch = new List<(double[,] map, double target)>();
@@ -208,7 +216,7 @@ namespace DocumentType.Teacher.Nets
                 var to = 0d;
                 var partHeight = imageSize.height;
                 var hPosition = 0;
-                var step = 3;
+                var step = scanStep / 2;
 
                 if (match.Success)
                 {

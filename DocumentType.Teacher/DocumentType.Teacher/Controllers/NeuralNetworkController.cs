@@ -9,6 +9,8 @@ using System.Drawing;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Linq;
+using ImageProcessing;
 
 namespace DocumentType.Teacher.Controllers
 {
@@ -69,18 +71,22 @@ namespace DocumentType.Teacher.Controllers
             return new[] { 0d };
         }
 
+        [HttpGet("layer/{layerIndex:int}")]
+        public IActionResult GetLayerViews(int layerIndex)
+        {
+            var views = NeuralNetwork.GetLayerViews(layerIndex);
+            //var result = views.Select((x, i) => File(x, "image/jpeg", $"test {i}")).ToArray();
+
+            return File(views[0], "image/jpeg", "test");
+        }
+
         [HttpPost("compute/image")]
         public IActionResult ComputeImage(IFormFile file)
         {
             var image = Image.FromStream(file.OpenReadStream());
             var result = NeuralNetwork.Compute(image);
-            var memory = new MemoryStream();
 
-            result.Save(memory, ImageFormat.Jpeg);
-
-            memory.Position = 0;
-
-            return File(memory, "image/jpeg", "test");
+            return File(result.ToByteArray(), "image/jpeg", "test");
         }
 
         [HttpPost("teach/run")]

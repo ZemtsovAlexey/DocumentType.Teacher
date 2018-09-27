@@ -7,7 +7,8 @@ export class NetSettings extends Component {
         super(props);
 
         this.state = {
-            layers: []
+            layers: [],
+            imageSrc: ''
         };
     }
 
@@ -46,12 +47,29 @@ export class NetSettings extends Component {
         });
     };
 
+    showLayerViews = async (i, event) => {
+        await fetch(`api/net/layer/${i}`)
+            .then(response => response.blob())
+            .then(response => {
+                //console.log(response);
+                //for (let i = 0; i < response.length; i++) {
+                //    let outside = URL.createObjectURL(response[i].blob());
+                //    console.log(outside);
+                //}
+                let outside = URL.createObjectURL(response);
+                console.log(outside);
+                this.setState({ imageSrc: outside });
+                //window.open(outside, '_blank')
+            });
+    };
+
     render() {
         const layers = this.state.layers;
         let i = -1;
 
         return (
             <div>
+                <img src={this.state.imageSrc} />
                 <Table striped bordered condensed hover>
                     <thead>
                         <tr>
@@ -96,6 +114,7 @@ export class NetSettings extends Component {
                                         value={layer.kernelSize || ''}
                                         onChange={this.updateKernelSize.bind(this, i)}
                                     />
+                                    <button onClick={this.showLayerViews.bind(this, i)}>show views</button>
                                 </td>
                             </tr>
                         )}

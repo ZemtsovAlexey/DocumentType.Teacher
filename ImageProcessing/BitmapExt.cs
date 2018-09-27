@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -224,6 +225,65 @@ namespace ImageProcessing
             newBitmap.UnlockBits(newBitmapData);
 
             return newBitmap;
+        }
+
+        public unsafe static Image ToBitmap(this double[,] data)
+        {
+            var height = data.GetLength(0);
+            var width = data.GetLength(1);
+            var bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            var step = bitmap.GetStep();
+            var bData = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            var minBright = 0d;
+            var maxBright = 0d;
+
+            for (var y = 0; y < data.GetLength(0); y++)
+            {
+                var row = (byte*)bData.Scan0 + y * bData.Stride;
+                var offset = 0;
+
+                for (var x = 0; x < data.GetLength(1); x++)
+                {
+                    maxBright = data[y, x] > maxBright ? data[y, x] : maxBright;
+                    offset += step;
+                }
+            }
+
+            for (var y = 0; y < data.GetLength(0); y++)
+            {
+                var row = (byte*)bData.Scan0 + y * bData.Stride;
+                var offset = 0;
+
+                for (var x = 0; x < data.GetLength(1); x++)
+                {
+                    var bright = (byte)Math.Max(0, Math.Min(255, data[y, x] / maxBright * 255));
+                    SetPixelBright(row, step, offset, bright);
+                    offset += step;
+                }
+            }
+
+            bitmap.UnlockBits(bData);
+
+            return bitmap;
+        }
+
+        public static byte[] ToByteArray(this Image image)
+        {
+            using (var stream = new MemoryStream())
+            {
+                image.Save(stream, ImageFormat.Jpeg);
+
+                return stream.ToArray();
+            }
+        }
+
+        public static Stream ToStream(this Image image)
+        {
+            var stream = new MemoryStream();
+            image.Save(stream, ImageFormat.Jpeg);
+            stream.Position = 0;
+
+            return stream;
         }
 
         private unsafe static byte GetPixelBright(byte* row, int step, int offset)
