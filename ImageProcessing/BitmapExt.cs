@@ -10,7 +10,7 @@ namespace ImageProcessing
 {
     public static class BitmapExt
     {
-        public unsafe static double[,] GetDoubleMatrix(this Image bitmap, double delimetr = 255f, bool invert = true)
+        public static unsafe double[,] GetDoubleMatrix(this Image bitmap, double delimetr = 255f, bool invert = true)
         {
             var result = new double[bitmap.Height, bitmap.Width];
             var procesBitmap = (Bitmap)bitmap.Clone();
@@ -227,7 +227,7 @@ namespace ImageProcessing
             return newBitmap;
         }
 
-        public unsafe static Image ToBitmap(this double[,] data)
+        public static unsafe Image ToBitmap(this double[,] data)
         {
             var height = data.GetLength(0);
             var width = data.GetLength(1);
@@ -286,7 +286,89 @@ namespace ImageProcessing
             return stream;
         }
 
-        private unsafe static byte GetPixelBright(byte* row, int step, int offset)
+        public static Image RotateImage(this Image image, float angle)
+        {
+            if (image == null)
+                throw new ArgumentNullException("image");
+
+            var offset = new PointF((float)image.Width / 2, (float)image.Height / 2);
+            var rotatedBmp = new Bitmap(image.Width, image.Height);
+
+            rotatedBmp.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            var g = Graphics.FromImage(rotatedBmp);
+
+            g.TranslateTransform(offset.X, offset.Y);
+            g.RotateTransform(angle);
+            g.TranslateTransform(-offset.X, -offset.Y);
+            g.DrawImage(image, new PointF(0, 0));
+
+            return rotatedBmp;
+        }
+        
+        public static unsafe double SomeMethode(Bitmap image)
+        {
+            int D = (int)(Math.Sqrt(image.Width * image.Width + image.Height * image.Height));
+            Bitmap houghSpace = new Bitmap(181, ((int)(1.414213562 * D) * 2) + 1);
+            int xpoint = 0;
+            double maxT = 0;
+            double[,] table = CreateTable();
+            
+            var imageData = image.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.ReadWrite, image.PixelFormat);
+            var houghData = houghSpace.LockBits(new Rectangle(0, 0, houghSpace.Width, houghSpace.Height), ImageLockMode.ReadWrite, houghSpace.PixelFormat);
+            
+            var imageScan = (byte*) imageData.Scan0;
+            var houghScan = (byte*) houghData.Scan0;
+            var imageStep = image.GetStep();
+            var houghStep = houghSpace.GetStep();
+            
+            for (int xi = 0; xi < image.Width; xi++)
+            {
+                for (int yi = 0; yi < image.Height; yi++)
+                {
+                    if (GetPixelBright(imageScan, imageStep, (yi * imageData.Stride + xi)) == 0) continue;
+                    
+                    for (int i = 0; i < 181; i++)
+                    {
+                        int rho = (int)((xi * table[0, i] + yi * table[1, i])) + (houghSpace.Height / 2);
+                        var g = GetPixelBright(houghScan, houghStep, (rho * houghData.Stride + i)) + 1;
+                        
+                        if (g > maxT)
+                        {
+                            maxT = g;
+                            xpoint = i;
+                        }
+                        
+                        SetPixelBright(houghScan, houghStep, (rho * houghData.Stride + i), (byte)Math.Max(255,g));
+                    }
+                }
+            }
+            
+            image.UnlockBits(imageData);
+            houghSpace.UnlockBits(houghData);
+            
+            double thetaHotPoint = ((Math.PI / 180) * -90d) + (Math.PI / 180) * xpoint;
+            return (90 - Math.Abs(thetaHotPoint) * (180 / Math.PI)) * (thetaHotPoint< 0 ? -1 : 1);
+        }
+        
+        private static double[,] CreateTable()
+        {
+            const double rad = (Math.PI / 180);
+
+            var table = new double[2, 181]; // 0 - cos, 1 - sin;
+            var theta = rad * -90;
+            
+            for (var i = 0; i < 181; i++)
+            {
+                table[0, i] = Math.Cos(theta);
+                table[1, i] = Math.Sin(theta);
+                theta += rad;
+            }
+            
+            return table;
+        }
+        
+        private static unsafe byte GetPixelBright(byte* row, int step, int offset)
         {
             var i = 0;
             var bright = 0;
@@ -301,7 +383,7 @@ namespace ImageProcessing
             return (byte)Math.Max(0, Math.Min(255, bright));
         }
 
-        private unsafe static void SetPixelBright(byte* row, int step, int offset, byte bright)
+        private static unsafe void SetPixelBright(byte* row, int step, int offset, byte bright)
         {
             for (var i = 0; i < step || i < 3; i++)
             {

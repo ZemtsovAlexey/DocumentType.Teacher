@@ -16,7 +16,6 @@ export class DocumentTypeTeacher extends Component {
             error: 0,
             successes: 0,
             successPercent: 0,
-            computeResult: 0,
             imageSrc: '/thumbnail.png'
         };
 
@@ -87,36 +86,6 @@ export class DocumentTypeTeacher extends Component {
                 <h1>Teacher</h1>
 
                 <Row>
-                    <Col sm={7}>
-                        <Thumbnail href="#" alt="171x180" src={this.state.imageSrc} />
-                    </Col>
-                    <Col sm={4}>
-                        <NetSettings />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={3}>
-                        <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
-                            <h1>File Upload</h1>
-                            <input type="file" onChange={this.onChange} />
-                            <Button type="submit" bsStyle="primary" disabled={this.state.fileUploading}>Upload</Button>
-                            <label>{this.state.computeResult}</label>
-                        </form>
-                    </Col>
-                    <Col sm={9}></Col>
-                </Row>
-                <FormGroup>
-                    <ControlLabel htmlFor="fileUpload" style={{ cursor: "pointer" }}><h3><Label bsStyle="success">Add file</Label></h3>
-                        <FormControl
-                            id="fileUpload"
-                            type="file"
-                            accept=".jpg"
-                            //onChange={this.addFile}
-                            style={{ display: "none" }}
-                        />
-                    </ControlLabel>
-                </FormGroup>
-                <Row>
                     <Col sm={2}>
                         <ButtonGroup>
                             <Button onClick={this.teachRun}>teach run</Button>
@@ -137,6 +106,26 @@ export class DocumentTypeTeacher extends Component {
                         <label>Successes: </label>
                         <label>{this.state.successes}</label>
                         <label>&nbsp;&nbsp;{this.state.successPercent}%</label>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col sm={12}>
+                        <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
+                            <h1>File Upload</h1>
+                            <input type="file" onChange={this.onChange} style={{display: 'inline-block', border: '1px solid silver'}} />
+                            <button type="submit" disabled={this.state.fileUploading}>Upload</button>
+                        </form>
+                    </Col>
+                    <Col sm={9}></Col>
+                </Row>
+                
+                <Row>
+                    <Col sm={7}>
+                        <Thumbnail href="#" alt="171x180" src={this.state.imageSrc} />
+                    </Col>
+                    <Col sm={4}>
+                        <NetSettings />
                     </Col>
                 </Row>
             </div>

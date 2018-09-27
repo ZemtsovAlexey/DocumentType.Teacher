@@ -12,30 +12,15 @@ export class NavMenu extends Component {
       <Navbar inverse fixedTop fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to={'/'}>DocumentType.Teacher</Link>
+            <Link to={'/document/type/teacher'}>DocumentType.Teacher</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to={'/'} exact>
-              <NavItem>
-                <Glyphicon glyph='home' /> Home
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/counter'}>
-              <NavItem>
-                <Glyphicon glyph='education' /> Counter
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/fetchdata'}>
-              <NavItem>
-                <Glyphicon glyph='th-list' /> Fetch data
-              </NavItem>
-            </LinkContainer>
-              <LinkContainer to={'/document/type/teacher'}>
+              <LinkContainer to={'/document/type/teacher'} exact>
                   <NavItem>
-                      <Glyphicon glyph='th-list' /> Document type teacher
+                      <Glyphicon glyph='education' /> Document type teacher
                   </NavItem>
               </LinkContainer>
           </Nav>

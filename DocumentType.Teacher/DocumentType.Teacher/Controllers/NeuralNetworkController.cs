@@ -61,6 +61,12 @@ namespace DocumentType.Teacher.Controllers
 
             return settings;
         }
+
+        [HttpPost("settings/apply")]
+        public void ApplySettings(NetSettings[] settings)
+        {
+            NeuralNetwork.Create(602, 34, settings);
+        }
         
         [HttpPost("[action]")]
         public double[] Compute(IFormFile file)

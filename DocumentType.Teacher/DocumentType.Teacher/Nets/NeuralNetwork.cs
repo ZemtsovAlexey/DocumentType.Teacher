@@ -24,13 +24,13 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         private static List<(double[,] map, double target)> teachBatch;
         private static (int width, int height) imageSize;
-        private static int scanStep => imageSize.height / 5;
+        private static int scanStep => imageSize.height > 5 ? imageSize.height / 5 : imageSize.height;
 
         public static event EventHandler<TeachResult> IterationChange;
 
         static NeuralNetwork()
         {
-            Create(602, 26);
+            Create(602, 34);
             PrepareTeachBatchFile();
         }
         
@@ -41,10 +41,10 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                //new ConvolutionLayer(ActivationType.ReLu, 2, 7), //600 - 48
-                //new MaxPoolingLayer(2), // 75 - 11
-                //new ConvolutionLayer(ActivationType.ReLu, 4, 3),
-                //new MaxPoolingLayer(2), // 75 - 11
+                new ConvolutionLayer(ActivationType.ReLu, 5, 7), //596 - 20
+                new MaxPoolingLayer(2), // 298 - 10
+                new ConvolutionLayer(ActivationType.ReLu, 10, 3), //296 - 8
+                new MaxPoolingLayer(2), // 148 - 4
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
@@ -91,6 +91,9 @@ namespace DocumentType.Teacher.Nets
 
         public static Image Compute(Image image)
         {
+//            var a = BitmapExt.SomeMethode((Bitmap)image);
+//            image = image.RotateImage((float)a);
+            
             var scaledImage = ((Bitmap)image)
                 .ToBlackWite()
                 .ScaleImage(imageSize.width, 100000);
@@ -175,13 +178,15 @@ namespace DocumentType.Teacher.Nets
 //                    error += prevSuccess > success ? teacher.Run(input, target) : 0;
                     error += teacher.Run(input, target);
                     iteration++;
-                    IterationChange?.Invoke(new object(), new TeachResult
-                    {
-                        Iteration = iteration, 
-                        Error = error / (double)iteration, 
-                        Successes = totalSuccess,
-                        SuccessPercent = globalSuccess / (double)iteration
-                    });
+
+//                    if (iteration % 10 == 0)
+                        IterationChange?.Invoke(new object(), new TeachResult
+                        {
+                            Iteration = iteration, 
+                            Error = error / (double)iteration, 
+                            Successes = totalSuccess,
+                            SuccessPercent = globalSuccess / (double)iteration
+                        });
                 }
             }).ConfigureAwait(false);
         }
@@ -216,7 +221,7 @@ namespace DocumentType.Teacher.Nets
                 var to = 0d;
                 var partHeight = imageSize.height;
                 var hPosition = 0;
-                var step = scanStep / 2;
+                var step = 1;
 
                 if (match.Success)
                 {
@@ -235,6 +240,13 @@ namespace DocumentType.Teacher.Nets
 
                 while (hPosition + partHeight < heigth)
                 {
+                    if ((hPosition < from && hPosition + partHeight > from) || 
+                        (hPosition > from && hPosition < to && hPosition + partHeight > to))
+                    {
+                        hPosition += step;
+                        continue;
+                    }
+                    
                     var mapPart = map.GetMapPart(0, hPosition, width, partHeight);
 
                     teachBatch.Add((mapPart, (from <= hPosition && to >= hPosition + partHeight ? 1d : -1d)));

@@ -62,6 +62,26 @@ export class NetSettings extends Component {
                 //window.open(outside, '_blank')
             });
     };
+    
+    applySettings = async () => {
+        let a = [];
+        
+        this.state.layers.map(layer => {
+            a.push({'Type': layer.type, 'Activation': layer.activation, 'NeuronsCount': layer.neuronsCount, 'KernelSize': layer.kernelSize});
+        });
+
+        let data = new FormData();
+        data.append('settings', a);
+        
+        await fetch('api/net/settings/apply', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(a)
+        })
+    };
 
     render() {
         const layers = this.state.layers;
@@ -123,7 +143,7 @@ export class NetSettings extends Component {
                 <Row>
                     <Col sm={12}>
                         <ButtonGroup>
-                            <Button>Apply</Button>
+                            <Button onClick={this.applySettings}>Apply</Button>
                             <Button onClick={this.prepareTeachBatchFile}>Prepare batch</Button>
                         </ButtonGroup>
                     </Col>
