@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Col, Grid, Row, Thumbnail, Table, ButtonGroup, Button } from 'react-bootstrap';
+let fileDownload = require('react-file-download');
 
 export class NetSettings extends Component {
 
@@ -8,16 +9,22 @@ export class NetSettings extends Component {
 
         this.state = {
             layers: [],
-            imageSrc: ''
+            imageSrc: '',
+            netFile: null,
+            loadNetRun:  false
         };
     }
-
+    
     componentDidMount = async () => {
+        await this.loadSettings();
+    };
+
+    loadSettings = async () => {
         await fetch('api/net/settings')
             .then(response => response.json())
             .then(data => this.setState({ layers: data }));
     };
-
+    
     updateLayerType = (i, event) => {
         let layers = this.state.layers;
         layers[i].type = parseInt(event.target.value);
@@ -70,9 +77,6 @@ export class NetSettings extends Component {
             a.push({'Type': layer.type, 'Activation': layer.activation, 'NeuronsCount': layer.neuronsCount, 'KernelSize': layer.kernelSize});
         });
 
-        let data = new FormData();
-        data.append('settings', a);
-        
         await fetch('api/net/settings/apply', {
             method: 'POST',
             headers: {
@@ -82,6 +86,26 @@ export class NetSettings extends Component {
             body: JSON.stringify(a)
         })
     };
+    
+    saveNet = () => {
+        window.open('api/net/save');
+    };
+    
+    loadNet = async () => {
+        this.setState({loadNetRun: true});
+
+        let data = new FormData();
+        data.append('file', this.state.netFile);
+        
+        await fetch('api/net/load', {
+                method: 'POST',
+                body: data
+            })
+            .then(async () => {
+                await this.loadSettings();
+                this.setState({loadNetRun: false}); 
+            });
+    };
 
     render() {
         const layers = this.state.layers;
@@ -89,7 +113,6 @@ export class NetSettings extends Component {
 
         return (
             <div>
-                <img src={this.state.imageSrc} />
                 <Table striped bordered condensed hover>
                     <thead>
                         <tr>
@@ -134,7 +157,7 @@ export class NetSettings extends Component {
                                         value={layer.kernelSize || ''}
                                         onChange={this.updateKernelSize.bind(this, i)}
                                     />
-                                    <button onClick={this.showLayerViews.bind(this, i)}>show views</button>
+                                    {/*<button onClick={this.showLayerViews.bind(this, i)}>show views</button>*/}
                                 </td>
                             </tr>
                         )}
@@ -143,9 +166,15 @@ export class NetSettings extends Component {
                 <Row>
                     <Col sm={12}>
                         <ButtonGroup>
-                            <Button onClick={this.applySettings}>Apply</Button>
-                            <Button onClick={this.prepareTeachBatchFile}>Prepare batch</Button>
+                            <Button bsStyle="primary" onClick={this.applySettings}>Apply</Button>
+                            <Button bsStyle="primary" onClick={this.prepareTeachBatchFile}>Prepare batch</Button>
+                            <Button bsStyle="primary" onClick={this.saveNet}>Save</Button>
                         </ButtonGroup>
+                        <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
+                            <h1>File Upload</h1>
+                            <input type="file" onChange={(e) => { this.setState({netFile: e.target.files[0]}); }} style={{display: 'inline-block', border: '1px solid silver'}} />
+                            <Button bsStyle="primary" onClick={this.loadNet} disabled={this.state.loadNetRun}>Load</Button>
+                        </form>
                     </Col>
                 </Row>
             </div>

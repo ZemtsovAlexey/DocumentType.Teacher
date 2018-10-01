@@ -65,7 +65,7 @@ namespace DocumentType.Teacher.Controllers
         [HttpPost("settings/apply")]
         public void ApplySettings(NetSettings[] settings)
         {
-            NeuralNetwork.Create(602, 34, settings);
+            NeuralNetwork.Create(602, 26, settings);
         }
         
         [HttpPost("[action]")]
@@ -75,6 +75,36 @@ namespace DocumentType.Teacher.Controllers
             var result = NeuralNetwork.Compute(image);
 
             return new[] { 0d };
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult Save()
+        {
+            var data = NeuralNetwork.Save();
+
+            return File(data, "application/octet-stream", $"documentTypeNW-{DateTime.Now}.nw");
+        }
+        
+        [HttpPost("[action]")]
+        public void Load(IFormFile file)
+        {
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                NeuralNetwork.Load(ms.ToArray());
+            }
+        }
+
+        [HttpGet("teach/learningRate")]
+        public double GetLearningRate()
+        {
+            return NeuralNetwork.LearningRate;
+        }
+        
+        [HttpPost("teach/learningRate/{value:double}")]
+        public void SetLearningRate([FromRoute]double value)
+        {
+            NeuralNetwork.LearningRate = value;
         }
 
         [HttpGet("layer/{layerIndex:int}")]

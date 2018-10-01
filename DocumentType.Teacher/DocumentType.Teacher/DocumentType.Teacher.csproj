@@ -34,6 +34,7 @@
 
     <ItemGroup>
       <Folder Include="TeachData\invoices" />
+      <Folder Include="TeachData\waybills" />
     </ItemGroup>
 
     <ItemGroup>

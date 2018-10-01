@@ -19,18 +19,25 @@ namespace DocumentType.Teacher.Nets
     public static class NeuralNetwork
     {
         public static Network Net;
+
+        public static double LearningRate
+        {
+            get => teacher.LearningRate;
+            set => teacher.LearningRate = value;
+        }
+
         public static bool Running { get; set; }
 
         private static BackPropagationLearning teacher;
         private static List<(double[,] map, double target)> teachBatch;
         private static (int width, int height) imageSize;
-        private static int scanStep => imageSize.height > 5 ? imageSize.height / 5 : imageSize.height;
+        private static int scanStep => imageSize.height > 13 ? imageSize.height / 5 : imageSize.height;
 
         public static event EventHandler<TeachResult> IterationChange;
 
         static NeuralNetwork()
         {
-            Create(602, 34);
+            Create(602, 26);
             PrepareTeachBatchFile();
         }
         
@@ -41,14 +48,14 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 5, 7), //596 - 20
-                new MaxPoolingLayer(2), // 298 - 10
-                new ConvolutionLayer(ActivationType.ReLu, 10, 3), //296 - 8
-                new MaxPoolingLayer(2), // 148 - 4
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new ConvolutionLayer(ActivationType.ReLu, 5, 3), //596 - 24
+                new MaxPoolingLayer(2), // 298 - 12
+                new ConvolutionLayer(ActivationType.ReLu, 10, 3), //296 - 10
+                new MaxPoolingLayer(2), // 148 - 5
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -94,7 +101,8 @@ namespace DocumentType.Teacher.Nets
 //            var a = BitmapExt.SomeMethode((Bitmap)image);
 //            image = image.RotateImage((float)a);
             
-            var scaledImage = ((Bitmap)image)
+            var scaledImage = image
+                .CutWhiteBorders(out _)
                 .ToBlackWite()
                 .ScaleImage(imageSize.width, 100000);
             var map = scaledImage.GetDoubleMatrix();
@@ -115,7 +123,7 @@ namespace DocumentType.Teacher.Nets
                 hPosition += step;
             }
 
-            var cords = result.Where(x => x.value > 0.3d).Select(x => new Cords { Top = x.position, Bottom = x.position + 26 }).ToList();
+            var cords = result.Where(x => x.value > 0.5d).Select(x => new Cords { Top = x.position, Bottom = x.position + partHeight }).ToList();
 
             return scaledImage.DrawCords(cords);
         }
@@ -145,7 +153,7 @@ namespace DocumentType.Teacher.Nets
                     double[] target;
                     var prevSuccess = success;
 
-                    if (falseAnswers < 1)
+                    if (trueAnswers > 0)
                     {
                         falseAnswers++;
                         trueAnswers = 0;
@@ -206,7 +214,7 @@ namespace DocumentType.Teacher.Nets
         public static void PrepareTeachBatchFile()
         {
             teachBatch = new List<(double[,] map, double target)>();
-            var imagesPaths = Directory.EnumerateFiles(@"TeachData/invoices", "*.jpg").ToArray();
+            var imagesPaths = Directory.EnumerateFiles(@"TeachData/waybills", "*.jpg").ToArray();
 
             foreach (var path in imagesPaths)
             {
@@ -216,6 +224,14 @@ namespace DocumentType.Teacher.Nets
                     continue;
 
                 var image = (Bitmap)GetImage(path);
+                var scaledImage = image
+                    .CutWhiteBorders(out var cutCords)
+                    .ToBlackWite()
+                    .ScaleImage(imageSize.width, 100000);
+                var map = scaledImage.GetDoubleMatrix();
+                var width = map.GetLength(1);
+                var height = map.GetLength(0);
+                
                 var ratio = (double)imageSize.width / image.Width;
                 var from = 0d;
                 var to = 0d;
@@ -225,27 +241,19 @@ namespace DocumentType.Teacher.Nets
 
                 if (match.Success)
                 {
-                    from = Convert.ToDouble(match.Groups["from"].Value) * ratio;
-                    to = Convert.ToDouble(match.Groups["to"].Value) * ratio;
-                    to = to - from < partHeight ? from + partHeight + step : to;
+                    from = Math.Max(0, ((Convert.ToDouble(match.Groups["from"].Value) - cutCords.Top) * ratio) - 3);
+                    to = (Convert.ToDouble(match.Groups["to"].Value) - cutCords.Top) * ratio;
+                    to = Math.Min(scaledImage.Height, to - from < partHeight ? from + partHeight + 3 : to);
                 }
 
-                var scaledImage = image
-                    .ToBlackWite()
-                    .ScaleImage(imageSize.width, 100000);
-                var map = scaledImage.GetDoubleMatrix();
-                var width = map.GetLength(1);
-                var heigth = map.GetLength(0);
-                var result = new List<(int position, double value)>();
-
-                while (hPosition + partHeight < heigth)
+                while (hPosition + partHeight < height)
                 {
-                    if ((hPosition < from && hPosition + partHeight > from) || 
-                        (hPosition > from && hPosition < to && hPosition + partHeight > to))
-                    {
-                        hPosition += step;
-                        continue;
-                    }
+//                    if ((hPosition < from && hPosition + partHeight > from) || 
+//                        (hPosition > from && hPosition < to && hPosition + partHeight > to))
+//                    {
+//                        hPosition += step;
+//                        continue;
+//                    }
                     
                     var mapPart = map.GetMapPart(0, hPosition, width, partHeight);
 
@@ -253,6 +261,17 @@ namespace DocumentType.Teacher.Nets
                     hPosition += step;
                 }
             }
+        }
+
+        public static byte[] Save()
+        {
+            return Net.Save();
+        }
+        
+        public static void Load(byte[] data)
+        {
+            Net.Load(data);
+            teacher = new BackPropagationLearning(Net);
         }
 
         private static Image GetImage(string path)

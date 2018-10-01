@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { Col, Row, Thumbnail, ButtonGroup, Button, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstrap';
+import { Col, Row, Thumbnail, ButtonGroup, Button, FormGroup, FormControl } from 'react-bootstrap';
 import { NetSettings } from './NetSettings';
 
 export class DocumentTypeTeacher extends Component {
@@ -16,7 +16,8 @@ export class DocumentTypeTeacher extends Component {
             error: 0,
             successes: 0,
             successPercent: 0,
-            imageSrc: '/thumbnail.png'
+            imageSrc: '/thumbnail.png',
+            learningRate: 0.03
         };
 
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -24,7 +25,7 @@ export class DocumentTypeTeacher extends Component {
         this.fileUpload = this.fileUpload.bind(this);
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const hubConnection = new HubConnectionBuilder()
             .withUrl(`${document.location.protocol}//${document.location.host}/teacherHub`)
             .configureLogging(LogLevel.Information)
@@ -40,6 +41,8 @@ export class DocumentTypeTeacher extends Component {
                 this.setState({ iteration: result.iteration, error: result.error, successes: result.successes, successPercent: result.successPercent });
             });
         });
+
+        // await this.getLearningRate();
     };
 
     onFormSubmit = async (e) => {
@@ -80,6 +83,19 @@ export class DocumentTypeTeacher extends Component {
         });
     }
 
+    getLearningRate = async () => {
+        await fetch('api/net/teach/learningRate')
+            .then((data) => data.data)
+            .then((data) => { this.setState({learningRate: data}) })
+    };
+
+    setLearningRate = async (event) => {
+        let value = event.target.value;
+        
+        await fetch(`api/net/teach/learningRate/${value}`, { method: 'POST' })
+            .then(() => { this.setState({learningRate: value}) })
+    };
+    
     render() {
         return (
             <div style={{ margin: '0 0 25px 0' }}>
@@ -108,16 +124,22 @@ export class DocumentTypeTeacher extends Component {
                         <label>&nbsp;&nbsp;{this.state.successPercent}%</label>
                     </Col>
                 </Row>
+                
+                <Row>
+                    <Col sm={4}>
+                        <label>Learning rate:&nbsp;</label>
+                        <input type='text' onChange={this.setLearningRate} value={this.state.learningRate}/>
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col sm={12}>
                         <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
                             <h1>File Upload</h1>
                             <input type="file" onChange={this.onChange} style={{display: 'inline-block', border: '1px solid silver'}} />
-                            <button type="submit" disabled={this.state.fileUploading}>Upload</button>
+                            <Button type="submit" bsStyle="primary" disabled={this.state.fileUploading}>Upload</Button>
                         </form>
                     </Col>
-                    <Col sm={9}></Col>
                 </Row>
                 
                 <Row>

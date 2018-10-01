@@ -186,8 +186,9 @@ namespace ImageProcessing
             return ((maxBright + minBright + minAvr + maxAvr) / 4f);
         }
 
-        public static Bitmap ToBlackWite(this Bitmap bitmap, double averege = 0)
+        public static Bitmap ToBlackWite(this Image image, double averege = 0)
         {
+            var bitmap = (Bitmap) image;
             averege = averege == 0 ? bitmap.GetAverBright() : averege;
 
             var newBitmap = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
@@ -349,6 +350,40 @@ namespace ImageProcessing
             
             double thetaHotPoint = ((Math.PI / 180) * -90d) + (Math.PI / 180) * xpoint;
             return (90 - Math.Abs(thetaHotPoint) * (180 / Math.PI)) * (thetaHotPoint< 0 ? -1 : 1);
+        }
+
+        public static Image CutWhiteBorders(this Image image, out Cords cords)
+        {
+            var procBitmap = image.ToBlackWite();
+            var map = procBitmap.GetDoubleMatrix();
+
+            var top = image.Height;
+            var left = image.Width;
+            var bottom = 0;
+            var right = 0;
+            
+            for (var y = 0; y < image.Height; y++)
+            {
+                for (var x = 0; x < image.Width; x++)
+                {
+                    var point = map[y, x];
+
+                    if (point > 0.9d)
+                    {
+                        top = Math.Min(top, y);
+                        bottom = Math.Max(bottom, y);
+                        left = Math.Min(left, x);
+                        right = Math.Max(right, x);
+                    }
+                }
+            }
+
+            cords = new Cords(top, bottom, left, right);
+            
+            var bitmap = (Bitmap) image;
+            var resultBitmap = bitmap.Clone(new Rectangle(left, top, right - left, bottom - top), image.PixelFormat);
+
+            return resultBitmap;
         }
         
         private static double[,] CreateTable()
