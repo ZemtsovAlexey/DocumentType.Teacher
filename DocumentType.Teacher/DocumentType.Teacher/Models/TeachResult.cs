@@ -9,5 +9,9 @@
         public int Successes { get; set; }
         
         public double SuccessPercent { get; set; }
+        
+        public int ImageIndex { get; set; }
+        
+        public int Target { get; set; }
     }
 }

@@ -97,6 +97,21 @@ namespace ImageProcessing
                     return 4;
             }
         }
+        
+        public static int GetStep(this BitmapData bitmap)
+        {
+            switch (bitmap.PixelFormat)
+            {
+                case PixelFormat.Format24bppRgb:
+                    return 3;
+
+                case PixelFormat.Format8bppIndexed:
+                    return 1;
+
+                default:
+                    return 4;
+            }
+        }
 
         public static Image DrawCords(this Image bitmap, List<Cords> cords, Color? color = null)
         {
@@ -200,7 +215,6 @@ namespace ImageProcessing
 
             unsafe
             {
-
                 for (var y = 0; y < height; y++)
                 {
                     byte c = 255;
@@ -223,6 +237,7 @@ namespace ImageProcessing
                 }
             }
 
+            bitmap.UnlockBits(bitmapData);
             newBitmap.UnlockBits(newBitmapData);
 
             return newBitmap;
@@ -307,32 +322,33 @@ namespace ImageProcessing
             return rotatedBmp;
         }
         
-        public static unsafe double SomeMethode(Bitmap image)
+        public static double FindAngel(this Image image)
         {
-            int D = (int)(Math.Sqrt(image.Width * image.Width + image.Height * image.Height));
-            Bitmap houghSpace = new Bitmap(181, ((int)(1.414213562 * D) * 2) + 1);
-            int xpoint = 0;
-            double maxT = 0;
-            double[,] table = CreateTable();
+            return image.GetDoubleMatrix().FindAngel();
+        }
+
+        public static double FindAngel(this double[,] imageMap)
+        {
+            var imageWidth = imageMap.GetLength(1);
+            var imageHeight = imageMap.GetLength(0);
+            var D = (int)(Math.Sqrt(imageWidth * imageWidth + imageHeight * imageHeight));
+            var hughWidth = 181;
+            var hughHeight = ((int)(1.414213562 * D) * 2) + 1;
+            var hughSpace = new double[hughHeight, hughWidth];
+            var xpoint = 0;
+            var maxT = 0d;
+            var table = CreateTable();
             
-            var imageData = image.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.ReadWrite, image.PixelFormat);
-            var houghData = houghSpace.LockBits(new Rectangle(0, 0, houghSpace.Width, houghSpace.Height), ImageLockMode.ReadWrite, houghSpace.PixelFormat);
-            
-            var imageScan = (byte*) imageData.Scan0;
-            var houghScan = (byte*) houghData.Scan0;
-            var imageStep = image.GetStep();
-            var houghStep = houghSpace.GetStep();
-            
-            for (int xi = 0; xi < image.Width; xi++)
+            for (var xi = 0; xi < imageWidth; xi++)
             {
-                for (int yi = 0; yi < image.Height; yi++)
+                for (var yi = 0; yi < imageHeight; yi++)
                 {
-                    if (GetPixelBright(imageScan, imageStep, (yi * imageData.Stride + xi)) == 0) continue;
+                    if (Math.Abs(imageMap[yi, xi]) == 0) continue;
                     
-                    for (int i = 0; i < 181; i++)
+                    for (var i = 0; i < 181; i++)
                     {
-                        int rho = (int)((xi * table[0, i] + yi * table[1, i])) + (houghSpace.Height / 2);
-                        var g = GetPixelBright(houghScan, houghStep, (rho * houghData.Stride + i)) + 1;
+                        var rho = (int)((xi * table[0, i] + yi * table[1, i])) + (hughHeight / 2);
+                        var g = hughSpace[rho, i] + 1;
                         
                         if (g > maxT)
                         {
@@ -340,18 +356,15 @@ namespace ImageProcessing
                             xpoint = i;
                         }
                         
-                        SetPixelBright(houghScan, houghStep, (rho * houghData.Stride + i), (byte)Math.Max(255,g));
+                        hughSpace[rho, i] = g;
                     }
                 }
             }
             
-            image.UnlockBits(imageData);
-            houghSpace.UnlockBits(houghData);
-            
-            double thetaHotPoint = ((Math.PI / 180) * -90d) + (Math.PI / 180) * xpoint;
+            var thetaHotPoint = ((Math.PI / 180) * -90d) + (Math.PI / 180) * xpoint;
             return (90 - Math.Abs(thetaHotPoint) * (180 / Math.PI)) * (thetaHotPoint< 0 ? -1 : 1);
         }
-
+        
         public static Image CutWhiteBorders(this Image image, out Cords cords)
         {
             var procBitmap = image.ToBlackWite();
@@ -377,7 +390,14 @@ namespace ImageProcessing
                     }
                 }
             }
-
+            
+            if (right < left || bottom < top)
+            {
+                cords = new Cords(0, image.Height, 0, image.Width);
+                
+                return image;
+            }
+            
             cords = new Cords(top, bottom, left, right);
             
             var bitmap = (Bitmap) image;

@@ -115,6 +115,14 @@ namespace DocumentType.Teacher.Controllers
 
             return File(views[0], "image/jpeg", "test");
         }
+        
+        [HttpGet("teach/batch/image/{index:int}/{target:int}")]
+        public IActionResult GetBatchViews(int index, int target = 0)
+        {
+            var views = NeuralNetwork.teachBatch.Where(x => target > 0 ? x.target > 0 : x.target <= 0).ToArray()[index].map.ToBitmap().ToByteArray();
+
+            return File(views, "image/jpeg", "test");
+        }
 
         [HttpPost("compute/image")]
         public IActionResult ComputeImage(IFormFile file)

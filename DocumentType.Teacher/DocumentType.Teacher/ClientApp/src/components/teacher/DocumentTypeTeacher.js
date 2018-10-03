@@ -17,7 +17,10 @@ export class DocumentTypeTeacher extends Component {
             successes: 0,
             successPercent: 0,
             imageSrc: '/thumbnail.png',
-            learningRate: 0.03
+            learningRate: 0.03,
+            batchImagePath: '',
+            batchImageIndex: 0,
+            batchTarget: 0
         };
 
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -38,7 +41,15 @@ export class DocumentTypeTeacher extends Component {
                 .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('IterationChange', (result) => {
-                this.setState({ iteration: result.iteration, error: result.error, successes: result.successes, successPercent: result.successPercent });
+                this.setState({ 
+                    iteration: result.iteration, 
+                    error: result.error, 
+                    successes: result.successes, 
+                    successPercent: result.successPercent,
+                    batchImageIndex: result.imageIndex,
+                    batchTarget: result.target});
+                
+                // this.showBatchImage();
             });
         });
 
@@ -96,6 +107,18 @@ export class DocumentTypeTeacher extends Component {
             .then(() => { this.setState({learningRate: value}) })
     };
     
+    changeBatchImageIndex = (e) => {
+        this.setState({batchImageIndex: e.target.value});
+    };
+
+    changeBatchTarget = (e) => {
+        this.setState({batchTarget: e.target.value});
+    };
+    
+    showBatchImage = () => {
+        this.setState({batchImagePath: `/api/net/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
+    };
+    
     render() {
         return (
             <div style={{ margin: '0 0 25px 0' }}>
@@ -148,6 +171,20 @@ export class DocumentTypeTeacher extends Component {
                     </Col>
                     <Col sm={4}>
                         <NetSettings />
+                    </Col>
+                </Row>
+                
+                <Row>
+                    <Col sm={12}>
+                        <input type='number' onChange={this.changeBatchImageIndex} value={this.state.batchImageIndex}/>
+                        <input type='number' onChange={this.changeBatchTarget} value={this.state.batchTarget}/>
+                        <button onClick={this.showBatchImage}>show</button>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col sm={12}>
+                        <img src={this.state.batchImagePath}/>
                     </Col>
                 </Row>
             </div>
