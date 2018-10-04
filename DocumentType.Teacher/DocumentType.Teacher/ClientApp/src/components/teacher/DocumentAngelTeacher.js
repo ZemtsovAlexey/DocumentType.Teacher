@@ -35,10 +35,10 @@ export class DocumentAngelTeacher extends Component {
             .build();
 
         this.setState({hubConnection}, () => {
-            //this.state.hubConnection
-            //    .start()
-            //    .then(() => console.log('Connection started!'))
-            //    .catch(err => console.log('Error while establishing connection :('));
+            this.state.hubConnection
+               .start()
+               .then(() => console.log('Connection started!'))
+               .catch(err => console.log('Error while establishing connection :('));
 
             this.state.hubConnection.on('AngelNetChange', (result) => {
                 this.setState({ 

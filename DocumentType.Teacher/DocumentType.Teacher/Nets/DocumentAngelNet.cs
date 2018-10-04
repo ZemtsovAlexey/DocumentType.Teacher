@@ -32,12 +32,13 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         public static List<(double[,] map, int angel)> teachBatch;
         private static (int width, int height) imageSize;
+        private static int scaledWidth = 602;
 
         public static event EventHandler<TeachResult> IterationChange;
 
         static DocumentAngelNet()
         {
-            Create(202, 202);
+            Create(602, 26);
             PrepareTeachBatchFile();
         }
         
@@ -52,29 +53,34 @@ namespace DocumentType.Teacher.Nets
                 new MaxPoolingLayer(2), // 298 - 12
                 new ConvolutionLayer(ActivationType.ReLu, 20, 3), //296 - 10
                 new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(4, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
 
             teacher = new BackPropagationLearning(Net);
+            teacher.LearningRate = 0.02f;
         }
         
-        public static float Compute(Image image)
+        public static Image Compute(Image image)
         {
             var scaledImage = image
                 .CutWhiteBorders(out _)
                 .ToBlackWite()
-                .ScaleImage(imageSize.width, 100000);
+                .ScaleImage(scaledWidth, 100000);
 
-            var imageData = ((Bitmap)scaledImage).Clone(new Rectangle(0, 0, imageSize.width, imageSize.height), scaledImage.PixelFormat);
-            var map = imageData.GetDoubleMatrix();
-            var computed = Net.Compute(map);
+            var map = scaledImage.GetDoubleMatrix();
+            var mapPart = map.GetMapPart(0, 0, imageSize.width, imageSize.height);
+            var computed = Net.Compute(mapPart);
+            
+            image.RotateFlip(GetAngel(computed));
 
-            return GetAngel(computed);
+            return image;
         }
 
         public static async Task TeachRun()
@@ -96,6 +102,7 @@ namespace DocumentType.Teacher.Nets
                     double[,] input;
                     double[] target = new double[4];
                     var rndFileIndex = 0;
+                    var prevSuccess = success;
 
                     rndFileIndex = rnd.Next(batchLength);
 
@@ -122,10 +129,13 @@ namespace DocumentType.Teacher.Nets
                             break;
                     }
 
-                    success = Success(computed, data.angel) ? success + 1 : 0;
+                    var result = Success(computed, data.angel);
+                    success = result ? success + 1 : 0;
+                    globalSuccess = result ? globalSuccess + 1 : globalSuccess;
 
                     totalSuccess = Math.Max(0, success > totalSuccess ? success : totalSuccess - 1);
                     error += teacher.Run(input, target);
+//                    error += prevSuccess > success ? teacher.Run(input, target) : 0;
                     iteration++;
 
                     if (iteration % 2 == 0)
@@ -134,7 +144,7 @@ namespace DocumentType.Teacher.Nets
                             Iteration = iteration, 
                             Error = error / (double)iteration, 
                             Successes = totalSuccess,
-                            SuccessPercent = globalSuccess / ((double)iteration / 3),
+                            SuccessPercent = globalSuccess / ((double)iteration),
                             ImageIndex = rndFileIndex,
                             Target = (int)target[0]
                         });
@@ -154,19 +164,21 @@ namespace DocumentType.Teacher.Nets
 
             foreach (var path in imagesPaths)
             {
-                var match = Regex.Match(path, @"(?<angel>\d+).jpg$");
-                
-                if (!match.Success) continue;
-                
                 var image = (Bitmap) GetImage(path);
                 var scaledImage = image
                     .CutWhiteBorders(out _)
                     .ToBlackWite()
-                    .ScaleImage(imageSize.width, 100000);
-                var imageData = ((Bitmap)scaledImage).Clone(new Rectangle(0, 0, imageSize.width, imageSize.height), scaledImage.PixelFormat);
-                var map = imageData.GetDoubleMatrix();
+                    .ScaleImage(scaledWidth, 100000);
+
+                for (var angel = 0; angel < 360; angel += 90)
+                {
+                    var teachAngel = Math.Abs(angel - 360) == 360 ? 0 : Math.Abs(angel - 360);
+                    scaledImage.RotateFlip(angel);
+                    var map = scaledImage.GetDoubleMatrix();
+                    var mapPart = map.GetMapPart(0, 0, imageSize.width, imageSize.height);
                 
-                teachBatch.Add((map, Convert.ToInt32(match.Groups["angel"].Value)));
+                    teachBatch.Add((mapPart, teachAngel));
+                }
             }
         }
 
@@ -212,26 +224,41 @@ namespace DocumentType.Teacher.Nets
             }
         }
 
-        private static float GetAngel(double[] computed)
+        private static int GetAngel(double[] computed)
         {
             var result = computed.ToList().IndexOf(computed.Max());
 
             switch (result)
             {
                 case 0:
-                    return 0f;
+                    return 0;
 
                 case 1:
-                    return 90f;
+                    return 90;
 
                 case 2:
-                    return 180f;
+                    return 180;
 
                 case 3:
-                    return 270f;
+                    return 270;
 
                 default:
-                    return 0f;
+                    return 0;
+            }
+        }
+
+        private static void RotateFlip(this Image image, int angel)
+        {
+            switch (angel)
+            {
+                case 90: image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                
+                case 180: image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                
+                case 270: image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
             }
         }
     }

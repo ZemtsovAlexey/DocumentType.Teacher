@@ -72,9 +72,7 @@ namespace DocumentType.Teacher.Controllers
         public IActionResult Compute(IFormFile file)
         {
             var image = Image.FromStream(file.OpenReadStream());
-            var angel = DocumentAngelNet.Compute(image);
-
-            var result = image.RotateImage(angel);
+            var result = DocumentAngelNet.Compute(image);
 
             return File(result.ToByteArray(), "image/jpeg", "test");
         }
@@ -118,7 +116,7 @@ namespace DocumentType.Teacher.Controllers
         [HttpPost("teach/stop")]
         public void TeachStop()
         {
-            NeuralNetwork.TeachStop();
+            DocumentAngelNet.TeachStop();
         }
         
         [HttpPost("teach/batch")]
