@@ -37,7 +37,7 @@ namespace DocumentType.Teacher.Nets
 
         static DocumentAngelNet()
         {
-            Create(200, 200);
+            Create(202, 202);
             PrepareTeachBatchFile();
         }
         
@@ -63,34 +63,18 @@ namespace DocumentType.Teacher.Nets
             teacher = new BackPropagationLearning(Net);
         }
         
-        public static Image Compute(Image image)
+        public static float Compute(Image image)
         {
             var scaledImage = image
                 .CutWhiteBorders(out _)
                 .ToBlackWite()
                 .ScaleImage(imageSize.width, 100000);
 
-            var map = scaledImage.GetDoubleMatrix();
-            var width = map.GetLength(1);
-            var height = map.GetLength(0);
-            var partHeight = imageSize.height;
-            var hPosition = 0;
-            var step = scanStep;
+            var imageData = ((Bitmap)scaledImage).Clone(new Rectangle(0, 0, imageSize.width, imageSize.height), scaledImage.PixelFormat);
+            var map = imageData.GetDoubleMatrix();
+            var computed = Net.Compute(map);
 
-            var result = new List<(int position, double value)>();
-
-            while(hPosition + partHeight < height)
-            {
-                var mapPart = map.GetMapPart(0, hPosition, width, partHeight);
-                var value = Net.Compute(mapPart);
-
-                result.Add((hPosition, value[0]));
-                hPosition += step;
-            }
-
-            var cords = result.Where(x => x.value > 0.5d).Select(x => new Cords { Top = x.position, Bottom = x.position + partHeight }).ToList();
-
-            return scaledImage.DrawCords(cords);
+            return GetAngel(computed);
         }
 
         public static async Task TeachRun()
@@ -98,12 +82,10 @@ namespace DocumentType.Teacher.Nets
             Running = true;
             var iteration = 0;
             var error = 0d;
-            var computed = 0d;
+            var computed = new double[4];
             var success = 0;
             var globalSuccess = 0;
             var totalSuccess = 0;
-            var trueAnswers = 0;
-            var falseAnswers = 0;
             var rnd = new Random((int)DateTime.Now.Ticks);
             var batchLength = teachBatch.Count();
             
@@ -119,7 +101,7 @@ namespace DocumentType.Teacher.Nets
 
                     var data = teachBatch[rndFileIndex];
                     input = data.map;
-                    computed = Net.Compute(input)[0];
+                    computed = Net.Compute(input);
 
                     switch (data.angel)
                     {
@@ -140,7 +122,7 @@ namespace DocumentType.Teacher.Nets
                             break;
                     }
 
-                    success = computed < 0.5d ? success + 1 : 0;
+                    success = Success(computed, data.angel) ? success + 1 : 0;
 
                     totalSuccess = Math.Max(0, success > totalSuccess ? success : totalSuccess - 1);
                     error += teacher.Run(input, target);
@@ -209,10 +191,47 @@ namespace DocumentType.Teacher.Nets
 
         private static bool Success(double[] computed, int target)
         {
+            var result = computed.ToList().IndexOf(computed.Max());
+
             switch (target)
             {
                 case 0:
-                    return computed.ToList().IndexOf(computed.Max()) == 
+                    return result == 0;
+
+                case 90:
+                    return result == 1;
+
+                case 180:
+                    return result == 2;
+
+                case 270:
+                    return result == 3;
+
+                default:
+                    return false;
+            }
+        }
+
+        private static float GetAngel(double[] computed)
+        {
+            var result = computed.ToList().IndexOf(computed.Max());
+
+            switch (result)
+            {
+                case 0:
+                    return 0f;
+
+                case 1:
+                    return 90f;
+
+                case 2:
+                    return 180f;
+
+                case 3:
+                    return 270f;
+
+                default:
+                    return 0f;
             }
         }
     }

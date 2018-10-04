@@ -23,6 +23,11 @@ export class NavMenu extends Component {
                       <Glyphicon glyph='education' /> Document type teacher
                   </NavItem>
               </LinkContainer>
+              <LinkContainer to={'/document/angel/teacher'}>
+                  <NavItem>
+                      <Glyphicon glyph='education' /> Document angel teacher
+                  </NavItem>
+             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

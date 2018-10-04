@@ -19,6 +19,11 @@ namespace DocumentType.Teacher
                 clients.All.SendAsync("IterationChange", r);
             };
 
+            DocumentAngelNet.IterationChange += (s, r) =>
+            {
+                clients.All.SendAsync("AngelNetChange", r);
+            };
+
             return base.OnConnectedAsync();
         }
     }

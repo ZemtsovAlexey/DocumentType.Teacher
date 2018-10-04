@@ -3,8 +3,8 @@ import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { Col, Row, Thumbnail, ButtonGroup, Button, FormGroup, FormControl } from 'react-bootstrap';
 import { NetSettings } from './NetSettings';
 
-export class DocumentAngleTeacher extends Component {
-    displayName = DocumentAngleTeacher.name;
+export class DocumentAngelTeacher extends Component {
+    displayName = DocumentAngelTeacher.name;
 
     constructor(props) {
         super(props);
@@ -35,12 +35,12 @@ export class DocumentAngleTeacher extends Component {
             .build();
 
         this.setState({hubConnection}, () => {
-            this.state.hubConnection
-                .start()
-                .then(() => console.log('Connection started!'))
-                .catch(err => console.log('Error while establishing connection :('));
+            //this.state.hubConnection
+            //    .start()
+            //    .then(() => console.log('Connection started!'))
+            //    .catch(err => console.log('Error while establishing connection :('));
 
-            this.state.hubConnection.on('IterationChange', (result) => {
+            this.state.hubConnection.on('AngelNetChange', (result) => {
                 this.setState({ 
                     iteration: result.iteration, 
                     error: result.error, 
@@ -76,26 +76,26 @@ export class DocumentAngleTeacher extends Component {
         let data = new FormData();
         data.append('file', file);
         
-        return fetch('api/net/Compute/image', {
+        return fetch('api/net/angel/Compute', {
             method: 'POST',
             body: data
         });
     }
 
     async teachRun(){
-        await fetch('api/net/teach/run', {
+        await fetch('api/net/angel/teach/run', {
             method: 'POST'
         });
     }
 
     async teachStop(){
-        await fetch('api/net/teach/stop', {
+        await fetch('api/net/angel/teach/stop', {
             method: 'POST'
         });
     }
 
     getLearningRate = async () => {
-        await fetch('api/net/teach/learningRate')
+        await fetch('api/net/angel/teach/learningRate')
             .then((data) => data.data)
             .then((data) => { this.setState({learningRate: data}) })
     };
@@ -103,7 +103,7 @@ export class DocumentAngleTeacher extends Component {
     setLearningRate = async (event) => {
         let value = event.target.value;
         
-        await fetch(`api/net/teach/learningRate/${value}`, { method: 'POST' })
+        await fetch(`api/net/angel/teach/learningRate/${value}`, { method: 'POST' })
             .then(() => { this.setState({learningRate: value}) })
     };
     
@@ -116,7 +116,7 @@ export class DocumentAngleTeacher extends Component {
     };
     
     showBatchImage = () => {
-        this.setState({batchImagePath: `/api/net/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
+        this.setState({ batchImagePath: `/api/net/angel/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
     };
     
     render() {
@@ -168,9 +168,6 @@ export class DocumentAngleTeacher extends Component {
                 <Row>
                     <Col sm={7}>
                         <Thumbnail href="#" alt="171x180" src={this.state.imageSrc} />
-                    </Col>
-                    <Col sm={4}>
-                        <NetSettings />
                     </Col>
                 </Row>
                 

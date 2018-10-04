@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Col, Grid, Row, Thumbnail, Table, ButtonGroup, Button } from 'react-bootstrap';
-let fileDownload = require('react-file-download');
 
 export class NetSettings extends Component {
 
