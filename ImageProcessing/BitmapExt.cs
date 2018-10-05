@@ -201,7 +201,7 @@ namespace ImageProcessing
             return ((maxBright + minBright + minAvr + maxAvr) / 4f);
         }
 
-        public static Bitmap ToBlackWite(this Image image, double averege = 0)
+        public static Image ToBlackWite(this Image image, double averege = 0)
         {
             var bitmap = (Bitmap) image;
             averege = averege == 0 ? bitmap.GetAverBright() : averege;

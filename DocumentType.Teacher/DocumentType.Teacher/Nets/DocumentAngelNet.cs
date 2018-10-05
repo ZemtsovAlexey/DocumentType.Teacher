@@ -32,13 +32,13 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         public static List<(double[,] map, int angel)> teachBatch;
         private static (int width, int height) imageSize;
-        private static int scaledWidth = 602;
+        private static int scaledWidth = 300;
 
         public static event EventHandler<TeachResult> IterationChange;
 
         static DocumentAngelNet()
         {
-            Create(602, 26);
+            Create(102, 102);
             PrepareTeachBatchFile();
         }
         
@@ -49,16 +49,21 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 5, 3), //596 - 24
-                new MaxPoolingLayer(2), // 298 - 12
-                new ConvolutionLayer(ActivationType.ReLu, 20, 3), //296 - 10
-                new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new ConvolutionLayer(ActivationType.ReLu, 5, 3), //200
+                new MaxPoolingLayer(2), // 100
+                new ConvolutionLayer(ActivationType.ReLu, 15, 3), //98
+                new MaxPoolingLayer(2), // 49
+                new ConvolutionLayer(ActivationType.ReLu, 30, 3), //46
+                new MaxPoolingLayer(2), // 23
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(4, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -75,12 +80,11 @@ namespace DocumentType.Teacher.Nets
                 .ScaleImage(scaledWidth, 100000);
 
             var map = scaledImage.GetDoubleMatrix();
-            var mapPart = map.GetMapPart(0, 0, imageSize.width, imageSize.height);
+            var mapPart = map.GetMapPart(map.GetLength(1) / 2 - imageSize.width / 2, map.GetLength(0) / 2 - imageSize.height / 2, imageSize.width, imageSize.height);
             var computed = Net.Compute(mapPart);
-            
-            image.RotateFlip(GetAngel(computed));
+            var result = image.RotateFlip(GetAngel(computed));
 
-            return image;
+            return result;
         }
 
         public static async Task TeachRun()
@@ -164,18 +168,18 @@ namespace DocumentType.Teacher.Nets
 
             foreach (var path in imagesPaths)
             {
-                var image = (Bitmap) GetImage(path);
-                var scaledImage = image
+                var image = GetImage(path)
                     .CutWhiteBorders(out _)
-                    .ToBlackWite()
-                    .ScaleImage(scaledWidth, 100000);
+                    .ToBlackWite();
 
                 for (var angel = 0; angel < 360; angel += 90)
                 {
+                    var flipedImage = image.RotateFlip(angel);
+                    flipedImage = flipedImage.ScaleImage(scaledWidth, 100000);
+
                     var teachAngel = Math.Abs(angel - 360) == 360 ? 0 : Math.Abs(angel - 360);
-                    scaledImage.RotateFlip(angel);
-                    var map = scaledImage.GetDoubleMatrix();
-                    var mapPart = map.GetMapPart(0, 0, imageSize.width, imageSize.height);
+                    var map = flipedImage.GetDoubleMatrix();
+                    var mapPart = map.GetMapPart(map.GetLength(1) / 2 - imageSize.width / 2, map.GetLength(0) / 2 - imageSize.height / 2, imageSize.width, imageSize.height);
                 
                     teachBatch.Add((mapPart, teachAngel));
                 }
@@ -247,19 +251,26 @@ namespace DocumentType.Teacher.Nets
             }
         }
 
-        private static void RotateFlip(this Image image, int angel)
+        private static Image RotateFlip(this Image image, int angel)
         {
+            var flipedImage = (Image)image.Clone();
+
             switch (angel)
             {
-                case 90: image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                case 90:
+                    flipedImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
                 
-                case 180: image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                case 180:
+                    flipedImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     break;
                 
-                case 270: image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                case 270:
+                    flipedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
             }
+
+            return flipedImage;
         }
     }
 }
