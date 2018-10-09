@@ -20,7 +20,10 @@ export class DocumentAngelTeacher extends Component {
             learningRate: 0.03,
             batchImagePath: '',
             batchImageIndex: 0,
-            batchTarget: 0
+            batchTarget: 0,
+            loadNetRun: false,
+            netFile: null,
+            preparedBatch: false
         };
 
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -118,6 +121,32 @@ export class DocumentAngelTeacher extends Component {
     showBatchImage = () => {
         this.setState({ batchImagePath: `/api/net/angel/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
     };
+
+    saveNet = () => {
+        window.open('api/net/angel/save');
+    };
+
+    loadNet = async () => {
+        this.setState({loadNetRun: true});
+
+        let data = new FormData();
+        data.append('file', this.state.netFile);
+
+        await fetch('api/net/angel/load', {
+            method: 'POST',
+            body: data
+        }).then(async () => {
+            this.setState({loadNetRun: false});
+        });
+    };
+
+    prepareTeachBatchFile = async () => {
+        this.setState({preparedBatch: true});
+        
+        await fetch('api/net/angel/teach/batch', {
+            method: 'POST'
+        }).then(() => { this.setState({preparedBatch: false}); });
+    };
     
     render() {
         return (
@@ -152,6 +181,20 @@ export class DocumentAngelTeacher extends Component {
                     <Col sm={4}>
                         <label>Learning rate:&nbsp;</label>
                         <input type='text' onChange={this.setLearningRate} value={this.state.learningRate}/>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col sm={12}>
+                        <ButtonGroup>
+                            {/*<Button bsStyle="primary" onClick={this.applySettings}>Apply</Button>*/}
+                            <Button bsStyle="primary" onClick={this.prepareTeachBatchFile} disabled={this.state.preparedBatch}>Prepare batch</Button>
+                            <Button bsStyle="primary" onClick={this.saveNet}>Save</Button>
+                        </ButtonGroup>
+                        <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
+                            <input type="file" onChange={(e) => { this.setState({netFile: e.target.files[0]}); }} style={{display: 'inline-block', border: '1px solid silver'}} />
+                            <Button bsStyle="primary" onClick={this.loadNet} disabled={this.state.loadNetRun}>Load Net</Button>
+                        </form>
                     </Col>
                 </Row>
 

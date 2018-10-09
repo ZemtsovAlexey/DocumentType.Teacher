@@ -105,12 +105,9 @@ namespace DocumentType.Teacher.Nets
                 .ScaleImage(imageSize.width, 100000);
 
             var angle = scaledImage.FindAngel();
-            
             scaledImage = scaledImage.RotateImage((float)angle);
 
             var map = scaledImage.GetDoubleMatrix();
-            
-            
             var width = map.GetLength(1);
             var height = map.GetLength(0);
             var partHeight = imageSize.height;
@@ -119,14 +116,14 @@ namespace DocumentType.Teacher.Nets
 
             var result = new List<(int position, double value)>();
 
-//            while(hPosition + partHeight < height)
-//            {
-//                var mapPart = map.GetMapPart(0, hPosition, width, partHeight);
-//                var value = Net.Compute(mapPart);
-//
-//                result.Add((hPosition, value[0]));
-//                hPosition += step;
-//            }
+            while(hPosition + partHeight < height)
+            {
+                var mapPart = map.GetMapPart(0, hPosition, width, partHeight);
+                var value = Net.Compute(mapPart);
+
+                result.Add((hPosition, value[0]));
+                hPosition += step;
+            }
 
             var cords = result.Where(x => x.value > 0.5d).Select(x => new Cords { Top = x.position, Bottom = x.position + partHeight }).ToList();
 
@@ -209,73 +206,6 @@ namespace DocumentType.Teacher.Nets
             }).ConfigureAwait(false);
         }
 
-        /*public static async (int imageIndex, double[] target) TeachDebugRun()
-        {
-            Running = true;
-            var iteration = 0;
-            var error = 0d;
-            var computed = 0d;
-            var success = 0;
-            var globalSuccess = 0;
-            var totalSuccess = 0;
-            var trueAnswers = 0;
-            var falseAnswers = 0;
-            var rnd = new Random((int) DateTime.Now.Ticks);
-            var batchTrue = teachBatch.Where(x => x.target > 0).ToList();
-            var batchFalse = teachBatch.Where(x => x.target <= 0).ToList();
-            var batchTrueLength = batchTrue.Count();
-            var batchFalseLength = batchFalse.Count();
-
-            var rndFileIndex = 0;
-            double[,] input;
-            double[] target;
-
-            if (trueAnswers > 0)
-            {
-                falseAnswers++;
-                trueAnswers = 0;
-
-                rndFileIndex = rnd.Next(batchFalseLength);
-
-                input = batchFalse[rndFileIndex].map;
-                computed = Net.Compute(input)[0];
-                target = new[] {-1d};
-
-                success = computed < 0.5d ? success + 1 : 0;
-                globalSuccess = computed < 0.5d ? globalSuccess + 1 : globalSuccess;
-            }
-            else
-            {
-                falseAnswers = 0;
-                trueAnswers++;
-
-                rndFileIndex = rnd.Next(batchTrueLength);
-
-                input = batchTrue[rndFileIndex].map;
-                computed = Net.Compute(input)[0];
-                target = new[] {1d};
-
-                success = computed > 0.5d ? success + 1 : 0;
-                globalSuccess = computed > 0.5d ? globalSuccess + 1 : globalSuccess;
-            }
-
-            totalSuccess = Math.Max(0, success > totalSuccess ? success : totalSuccess - 1);
-//                    error += prevSuccess > success ? teacher.Run(input, target) : 0;
-            error += teacher.Run(input, target);
-            iteration++;
-
-            if (iteration % 2 == 0)
-                IterationChange?.Invoke(new object(), new TeachResult
-                {
-                    Iteration = iteration,
-                    Error = error / (double) iteration,
-                    Successes = totalSuccess,
-                    SuccessPercent = globalSuccess / (double) iteration
-                });
-            
-            return (rndFileIndex, target);
-        }*/
-        
         public static void TeachStop()
         {
             Running = false;

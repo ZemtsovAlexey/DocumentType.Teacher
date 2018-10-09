@@ -38,7 +38,7 @@ namespace ImageProcessing
             return result;
         }
 
-        public static Image ScaleImage(this Image image, int maxWidth, int maxHeight)
+        public static Image ScaleImage(this Image image, int maxWidth, int maxHeight, bool equalSize = false)
         {
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
@@ -46,11 +46,22 @@ namespace ImageProcessing
 
             var newWidth = (int)(image.Width * ratio);
             var newHeight = (int)(image.Height * ratio);
-
+            
+            var x = !equalSize || newWidth > newHeight ? 0 : (newHeight - newWidth) / 2;
+            var y = !equalSize || newHeight > newWidth ? 0 : (newWidth - newHeight) / 2;
             var newImage = new Bitmap(newWidth, newHeight);
+            
+            if (equalSize)
+            {
+                var size = Math.Max(newWidth, newHeight);
 
+                newImage = new Bitmap(size, size);
+            }
+            
             using (var graphics = Graphics.FromImage(newImage))
-                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+            {
+                graphics.DrawImage(image, x, y, newWidth, newHeight);
+            }
 
             return newImage;
         }
