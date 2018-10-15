@@ -68,6 +68,12 @@ namespace DocumentType.Teacher.Controllers
             NeuralNetwork.Create(602, 26, settings);
         }
         
+        [HttpGet("settings/reset")]
+        public void Reset()
+        {
+            DocumentAngelNet.Reset();
+        }
+        
         [HttpPost("[action]")]
         public IActionResult Compute(IFormFile file)
         {

@@ -32,7 +32,7 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         public static List<(double[,] map, int angel)> teachBatch;
         private static (int width, int height) imageSize;
-        private static int scaledWidth = 244;
+        private static int scaledWidth = 234;
 
         public static event EventHandler<TeachResult> IterationChange;
 
@@ -40,6 +40,11 @@ namespace DocumentType.Teacher.Nets
         {
             Create(scaledWidth, scaledWidth);
 //            PrepareTeachBatchFile();
+        }
+
+        public static void Reset()
+        {
+            Create(scaledWidth, scaledWidth);
         }
         
         public static void Create(int width, int height)
@@ -49,24 +54,20 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 2, 3), //242
-                new ConvolutionLayer(ActivationType.ReLu, 4, 3), //240
-                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //238
-                new ConvolutionLayer(ActivationType.ReLu, 12, 3), //236
-                new MaxPoolingLayer(2), // 118
-                new ConvolutionLayer(ActivationType.ReLu, 16, 3), //116
-                new MaxPoolingLayer(2), // 58
-                new ConvolutionLayer(ActivationType.ReLu, 20, 3), //56
-                new MaxPoolingLayer(2), // 28
-                new ConvolutionLayer(ActivationType.ReLu, 24, 3), //26
-                new MaxPoolingLayer(2), // 13
-//                new ConvolutionLayer(ActivationType.ReLu, 16, 4), //20
-//                new MaxPoolingLayer(2), // 10
+                new ConvolutionLayer(ActivationType.ReLu, 2, 3), //232
+                new MaxPoolingLayer(2), // 116
+                new ConvolutionLayer(ActivationType.ReLu, 4, 3), //114
+                new MaxPoolingLayer(2), // 57
+//                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //54
+//                new MaxPoolingLayer(2), // 27
+//                new ConvolutionLayer(ActivationType.ReLu, 16, 3), //24
+//                new MaxPoolingLayer(2), // 12
+//                new ConvolutionLayer(ActivationType.ReLu, 20, 4), //10
+//                new MaxPoolingLayer(2), // 5
                 new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(40, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(40, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(40, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(40, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(4, ActivationType.BipolarSigmoid));
 
             Net.Randomize();

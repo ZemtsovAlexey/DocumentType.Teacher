@@ -147,6 +147,10 @@ export class DocumentAngelTeacher extends Component {
             method: 'POST'
         }).then(() => { this.setState({preparedBatch: false}); });
     };
+
+    resetNet = async () => {
+        await fetch('api/net/angel/settings/reset');
+    };
     
     render() {
         return (
@@ -187,7 +191,7 @@ export class DocumentAngelTeacher extends Component {
                 <Row>
                     <Col sm={12}>
                         <ButtonGroup>
-                            {/*<Button bsStyle="primary" onClick={this.applySettings}>Apply</Button>*/}
+                            <Button bsStyle="primary" onClick={this.resetNet}>Reset</Button>
                             <Button bsStyle="primary" onClick={this.prepareTeachBatchFile} disabled={this.state.preparedBatch}>Prepare batch</Button>
                             <Button bsStyle="primary" onClick={this.saveNet}>Save</Button>
                         </ButtonGroup>

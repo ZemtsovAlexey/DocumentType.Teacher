@@ -118,7 +118,7 @@ export class DocumentTypeTeacher extends Component {
     showBatchImage = () => {
         this.setState({batchImagePath: `/api/net/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
     };
-    
+
     render() {
         return (
             <div style={{ margin: '0 0 25px 0' }}>

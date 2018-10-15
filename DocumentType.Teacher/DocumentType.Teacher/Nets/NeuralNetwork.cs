@@ -51,12 +51,12 @@ namespace DocumentType.Teacher.Nets
             Net.InitLayers(width, height,
                 new ConvolutionLayer(ActivationType.ReLu, 5, 3), //596 - 24
                 new MaxPoolingLayer(2), // 298 - 12
-                new ConvolutionLayer(ActivationType.ReLu, 20, 3), //296 - 10
+                new ConvolutionLayer(ActivationType.ReLu, 10, 3), //296 - 10
                 new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(100, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
