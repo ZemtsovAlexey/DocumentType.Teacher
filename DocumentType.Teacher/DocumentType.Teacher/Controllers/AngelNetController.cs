@@ -101,6 +101,30 @@ namespace DocumentType.Teacher.Controllers
             }
         }
 
+        [HttpPost("[action]")]
+        public void Test(TestRequestDto request)
+        {
+            var imgPaths = Directory.GetFiles(request.PathFrom, "*.jpg", SearchOption.AllDirectories);
+            var i = 0;
+            
+            foreach (var path in imgPaths.Take(300))
+            {
+                try
+                {
+                    var img = new Bitmap(path);
+                    var result = DocumentAngelNet.Compute(img);
+                
+                    result.Save($"{request.PathTo}/{i}.jpg");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+                i++;
+            }
+        }
+        
         [HttpGet("teach/learningRate")]
         public double GetLearningRate()
         {
@@ -130,5 +154,12 @@ namespace DocumentType.Teacher.Controllers
         {
             DocumentAngelNet.PrepareTeachBatchFile();
         }
+    }
+
+    public class TestRequestDto
+    {
+        public string PathFrom { get; set; }
+        
+        public string PathTo { get; set; }
     }
 }

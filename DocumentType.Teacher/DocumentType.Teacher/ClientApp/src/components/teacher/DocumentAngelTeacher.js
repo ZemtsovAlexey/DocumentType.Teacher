@@ -151,6 +151,20 @@ export class DocumentAngelTeacher extends Component {
     resetNet = async () => {
         await fetch('api/net/angel/settings/reset');
     };
+
+    testNet = async () => {
+        await fetch('api/net/angel/test', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'pathFrom': 'D:\\documents types\\доки\\доки\\invoices',
+                'pathTo': 'D:\\documents types\\доки\\test'
+            })
+        })
+    };
     
     render() {
         return (
@@ -194,6 +208,7 @@ export class DocumentAngelTeacher extends Component {
                             <Button bsStyle="primary" onClick={this.resetNet}>Reset</Button>
                             <Button bsStyle="primary" onClick={this.prepareTeachBatchFile} disabled={this.state.preparedBatch}>Prepare batch</Button>
                             <Button bsStyle="primary" onClick={this.saveNet}>Save</Button>
+                            <Button bsStyle="primary" onClick={this.testNet}>Test</Button>
                         </ButtonGroup>
                         <form onSubmit={this.onFormSubmit} style={{display: "inline"}}>
                             <input type="file" onChange={(e) => { this.setState({netFile: e.target.files[0]}); }} style={{display: 'inline-block', border: '1px solid silver'}} />

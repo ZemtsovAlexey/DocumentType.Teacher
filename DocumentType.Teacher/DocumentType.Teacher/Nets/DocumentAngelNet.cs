@@ -32,7 +32,7 @@ namespace DocumentType.Teacher.Nets
         private static BackPropagationLearning teacher;
         public static List<(double[,] map, int angel)> teachBatch;
         private static (int width, int height) imageSize;
-        private static int scaledWidth = 234;
+        private static int scaledWidth = 206;
 
         public static event EventHandler<TeachResult> IterationChange;
 
@@ -54,20 +54,18 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 2, 3), //232
-                new MaxPoolingLayer(2), // 116
-                new ConvolutionLayer(ActivationType.ReLu, 4, 3), //114
-                new MaxPoolingLayer(2), // 57
-//                new ConvolutionLayer(ActivationType.ReLu, 8, 3), //54
-//                new MaxPoolingLayer(2), // 27
-//                new ConvolutionLayer(ActivationType.ReLu, 16, 3), //24
-//                new MaxPoolingLayer(2), // 12
-//                new ConvolutionLayer(ActivationType.ReLu, 20, 4), //10
-//                new MaxPoolingLayer(2), // 5
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 2, 3), //204
+                new MaxPoolingLayer(2), // 102
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 4, 3), //100
+                new MaxPoolingLayer(2), // 50
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 6, 3), //48
+                new MaxPoolingLayer(2), // 24
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 8, 3), //22
+                new MaxPoolingLayer(2), // 11
+//                new ConvolutionLayer(ActivationType.BipolarSigmoid, 10, 3), //8
+//                new MaxPoolingLayer(2), // 4
+                new FullyConnectedLayer(60, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(60, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(4, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -85,7 +83,7 @@ namespace DocumentType.Teacher.Nets
             var map = scaledImage.GetDoubleMatrix();
             var mapPart = map.GetMapPart(map.GetLength(1) / 2 - imageSize.width / 2, map.GetLength(0) / 2 - imageSize.height / 2, imageSize.width, imageSize.height);
             var computed = Net.Compute(mapPart);
-            var result = scaledImage.RotateFlip(GetAngel(computed));
+            var result = image.RotateFlip(GetAngel(computed));
 
             return result;
         }

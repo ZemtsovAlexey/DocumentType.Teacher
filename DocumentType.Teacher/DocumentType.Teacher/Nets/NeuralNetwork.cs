@@ -49,14 +49,12 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.ReLu, 5, 3), //596 - 24
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 2, 3), //596 - 24
                 new MaxPoolingLayer(2), // 298 - 12
-                new ConvolutionLayer(ActivationType.ReLu, 10, 3), //296 - 10
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 4, 3), //296 - 10
                 new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(50, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(20, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -104,8 +102,8 @@ namespace DocumentType.Teacher.Nets
                 .ToBlackWite()
                 .ScaleImage(imageSize.width, 100000);
 
-            var angle = scaledImage.FindAngel();
-            scaledImage = scaledImage.RotateImage((float)angle);
+//            var angle = scaledImage.FindAngel();
+//            scaledImage = scaledImage.RotateImage((float)angle);
 
             var map = scaledImage.GetDoubleMatrix();
             var width = map.GetLength(1);
@@ -154,7 +152,7 @@ namespace DocumentType.Teacher.Nets
                     double[,] input;
                     double[] target;
                     var rndFileIndex = 0;
-//                    var prevSuccess = success;
+                    var prevSuccess = success;
 
                     if (falseAnswers < 2)
                     {
@@ -190,7 +188,7 @@ namespace DocumentType.Teacher.Nets
                     error += teacher.Run(input, target);
                     iteration++;
 
-                    if (iteration % 2 == 0)
+                    if (iteration % 3 == 0)
                         IterationChange?.Invoke(new object(), new TeachResult
                         {
                             Iteration = iteration, 
