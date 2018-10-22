@@ -128,6 +128,7 @@ namespace DocumentType.Teacher.Controllers
         public IActionResult ComputeImage(IFormFile file)
         {
             var image = Image.FromStream(file.OpenReadStream());
+            image = DocumentAngelNet.Compute(image);
             var result = NeuralNetwork.Compute(image);
 
             return File(result.ToByteArray(), "image/jpeg", "test");

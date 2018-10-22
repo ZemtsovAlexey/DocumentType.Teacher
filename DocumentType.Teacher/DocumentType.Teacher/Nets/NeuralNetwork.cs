@@ -53,8 +53,9 @@ namespace DocumentType.Teacher.Nets
                 new MaxPoolingLayer(2), // 298 - 12
                 new ConvolutionLayer(ActivationType.BipolarSigmoid, 4, 3), //296 - 10
                 new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(20, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(80, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -188,7 +189,7 @@ namespace DocumentType.Teacher.Nets
                     error += teacher.Run(input, target);
                     iteration++;
 
-                    if (iteration % 3 == 0)
+                    if (iteration % 5 == 0)
                         IterationChange?.Invoke(new object(), new TeachResult
                         {
                             Iteration = iteration, 
