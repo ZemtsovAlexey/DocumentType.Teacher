@@ -99,7 +99,7 @@ namespace DocumentType.Teacher.Nets
         public static Image Compute(Image image)
         {
             var scaledImage = image
-                .CutWhiteBorders(out _)
+                //.CutWhiteBorders(out _)
                 .ToBlackWite()
                 .ScaleImage(imageSize.width, 100000);
 
@@ -220,7 +220,7 @@ namespace DocumentType.Teacher.Nets
         public static void PrepareTeachBatchFile()
         {
             teachBatch = new List<(double[,] map, double target)>();
-            var imagesPaths = Directory.EnumerateFiles(@"TeachData/invoices", "*.jpg").ToArray();
+            var imagesPaths = Directory.EnumerateFiles(@"TeachData/statements", "*.jpg").ToArray();
 
             foreach (var path in imagesPaths)
             {
@@ -230,8 +230,9 @@ namespace DocumentType.Teacher.Nets
 //                    continue;
 
                 var image = (Bitmap)GetImage(path);
+                Cords cutCords = new Cords();
                 var scaledImage = image
-                    .CutWhiteBorders(out var cutCords)
+                    //.CutWhiteBorders(out cutCords)
                     .ToBlackWite()
                     .ScaleImage(imageSize.width, 100000);
                 var map = scaledImage.GetDoubleMatrix();
