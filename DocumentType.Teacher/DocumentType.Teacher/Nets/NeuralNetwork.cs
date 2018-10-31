@@ -124,9 +124,32 @@ namespace DocumentType.Teacher.Nets
                 hPosition += step;
             }
 
-            var cords = result.Where(x => x.value > 0.5d).Select(x => new Cords { Top = x.position, Bottom = x.position + partHeight }).ToList();
+            var g = new List<(int position, double value)>();
+            g = result;
+            //foreach(var r in result.Where(x => x.value > 0.5d))
+            //{
+            //    var a = g.Where(x => x.position + partHeight > r.position || r.position + partHeight > x.position).ToList();
+            //    var item = r;
 
-            return scaledImage.DrawCords(cords);
+            //    if (a.Any())
+            //    {
+            //        a.Add(r);
+            //        item = a.Aggregate((i1, i2) => i1.value > i2.value ? i1 : i2);
+            //        g.RemoveAll(x => x.position + partHeight > r.position || r.position + partHeight > x.position);
+            //    }
+
+            //    g.Add(item);
+            //}
+
+            var cords = g.Where(x => x.value > 0.5d).Select(x => new Cords { Top = x.position, Bottom = x.position + partHeight }).ToList();
+            var resultImg = scaledImage.DrawCords(cords, Color.Red);
+
+            foreach(var x in g.Where(x => x.value > 0.5d))
+            {
+                resultImg = resultImg.DrawText($"Акт: {x.value}", new PointF(0, Math.Max(0, x.position - partHeight)), Brushes.Red);
+            }
+
+            return resultImg;
         }
 
         public static async Task TeachRun()
@@ -155,7 +178,7 @@ namespace DocumentType.Teacher.Nets
                     var rndFileIndex = 0;
                     var prevSuccess = success;
 
-                    if (falseAnswers < 2)
+                    if (falseAnswers < 1)
                     {
                         falseAnswers++;
                         trueAnswers = 0;
@@ -195,7 +218,7 @@ namespace DocumentType.Teacher.Nets
                             Iteration = iteration, 
                             Error = error / (double)iteration, 
                             Successes = totalSuccess,
-                            SuccessPercent = globalSuccess / ((double)iteration / 3),
+                            SuccessPercent = globalSuccess / ((double)iteration / 4),
                             ImageIndex = rndFileIndex,
                             Target = (int)target[0]
                         });

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -145,7 +146,7 @@ namespace ImageProcessing
 
                         for (var x = 0; x <= width; x++)
                         {
-                            if (x == 0 || x == width - 1 || y == cord.Top || y == cord.Bottom)
+                            if (x < 2 || x > width - 3 || y == cord.Top || y == cord.Top + 1 || y == cord.Bottom || y == cord.Bottom - 1)
                             {
                                 pRow[offset + 2] = randomColor.R;
                                 pRow[offset + 1] = randomColor.G;
@@ -161,6 +162,20 @@ namespace ImageProcessing
             newBitmap.UnlockBits(bitmapData);
 
             return newBitmap;
+        }
+
+        public static Image DrawText(this Image image, string text, PointF point, Brush brush = null)
+        {
+            brush = brush ?? Brushes.Black;
+
+            Graphics g = Graphics.FromImage(image);
+
+            var font = new Font("Arial", 16);
+
+            g.DrawString(text, font, brush, point);
+            g.Flush();
+
+            return image;
         }
 
         public static float GetAverBright(this Image bitmap)
