@@ -49,13 +49,12 @@ namespace DocumentType.Teacher.Nets
             Net = new Network();
 
             Net.InitLayers(width, height,
-                new ConvolutionLayer(ActivationType.BipolarSigmoid, 2, 3), //596 - 24
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 4, 3), //596 - 24
                 new MaxPoolingLayer(2), // 298 - 12
-                new ConvolutionLayer(ActivationType.BipolarSigmoid, 4, 3), //296 - 10
+                new ConvolutionLayer(ActivationType.BipolarSigmoid, 8, 3), //296 - 10
                 new MaxPoolingLayer(2), // 148 - 5
-                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
-                new FullyConnectedLayer(30, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(20, ActivationType.BipolarSigmoid),
+                new FullyConnectedLayer(20, ActivationType.BipolarSigmoid),
                 new FullyConnectedLayer(1, ActivationType.BipolarSigmoid));
 
             Net.Randomize();
@@ -178,7 +177,7 @@ namespace DocumentType.Teacher.Nets
                     var rndFileIndex = 0;
                     var prevSuccess = success;
 
-                    if (falseAnswers < 1)
+                    if (falseAnswers < 2)
                     {
                         falseAnswers++;
                         trueAnswers = 0;
@@ -218,7 +217,7 @@ namespace DocumentType.Teacher.Nets
                             Iteration = iteration, 
                             Error = error / (double)iteration, 
                             Successes = totalSuccess,
-                            SuccessPercent = globalSuccess / ((double)iteration / 4),
+                            SuccessPercent = globalSuccess / ((double)iteration / 2),
                             ImageIndex = rndFileIndex,
                             Target = (int)target[0]
                         });

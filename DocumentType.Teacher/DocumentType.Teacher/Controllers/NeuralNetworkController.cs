@@ -151,5 +151,29 @@ namespace DocumentType.Teacher.Controllers
         {
             NeuralNetwork.PrepareTeachBatchFile();
         }
+
+        [HttpPost("[action]")]
+        public void Test(TestRequestDto request)
+        {
+            var imgPaths = Directory.GetFiles(request.PathFrom, "*.jpg", SearchOption.AllDirectories);
+            var i = 0;
+
+            foreach (var path in imgPaths.Take(300))
+            {
+                try
+                {
+                    var img = new Bitmap(path);
+                    var result = NeuralNetwork.Compute(img);
+
+                    result.Save($"{request.PathTo}/{i}.jpg");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+                i++;
+            }
+        }
     }
 }

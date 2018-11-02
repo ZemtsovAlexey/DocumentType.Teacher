@@ -119,6 +119,20 @@ export class DocumentTypeTeacher extends Component {
         this.setState({batchImagePath: `/api/net/teach/batch/image/${this.state.batchImageIndex}/${this.state.batchTarget}`});
     };
 
+    testNet = async () => {
+        await fetch('api/net/test', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'pathFrom': 'C:\\trash\\docs\\statements',
+                'pathTo': 'C:\\trash\\docs\\test'
+            })
+        })
+    };
+
     render() {
         return (
             <div style={{ margin: '0 0 25px 0' }}>
@@ -152,6 +166,12 @@ export class DocumentTypeTeacher extends Component {
                     <Col sm={4}>
                         <label>Learning rate:&nbsp;</label>
                         <input type='text' onChange={this.setLearningRate} value={this.state.learningRate}/>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col sm={4}>
+                        <Button bsStyle="primary" onClick={this.testNet}>Test</Button>
                     </Col>
                 </Row>
 
